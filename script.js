@@ -2,34 +2,27 @@
    DATA AKUN
 ===================================== */
 
-let accounts =
-    JSON.parse(
-        localStorage.getItem("accounts")
-    ) || [];
+let accounts = JSON.parse(
+    localStorage.getItem("accounts")
+) || [];
 
 
 /* =====================================
-   PASTIKAN ADMIN UTAMA ADA
+   ADMIN UTAMA
 ===================================== */
 
-let adminAccount =
-    accounts.find(
-        account =>
-            account.username &&
-            account.username.toLowerCase() === "admin"
-    );
+let adminAccount = accounts.find(
+    account =>
+        account.username.toLowerCase() === "admin"
+);
 
 
 if (!adminAccount) {
 
     accounts.push({
-
         username: "admin",
-
         password: "12345",
-
         role: "admin"
-
     });
 
 }
@@ -41,12 +34,60 @@ else {
 }
 
 
-/* SIMPAN */
-
 localStorage.setItem(
     "accounts",
     JSON.stringify(accounts)
 );
+
+
+/* =====================================
+   MOBILE SIDEBAR
+===================================== */
+
+function toggleSidebar() {
+
+    const sidebar =
+        document.getElementById("sidebar");
+
+    const overlay =
+        document.getElementById("sidebarOverlay");
+
+    if (!sidebar) return;
+
+    sidebar.classList.toggle("open");
+
+    if (overlay) {
+
+        overlay.classList.toggle(
+            "show"
+        );
+
+    }
+
+}
+
+
+function closeSidebar() {
+
+    const sidebar =
+        document.getElementById("sidebar");
+
+    const overlay =
+        document.getElementById("sidebarOverlay");
+
+    if (sidebar) {
+
+        sidebar.classList.remove("open");
+
+    }
+
+    if (overlay) {
+
+        overlay.classList.remove("show");
+
+    }
+
+}
 
 
 /* =====================================
@@ -71,8 +112,6 @@ if (loginForm) {
     const togglePassword =
         document.getElementById("togglePassword");
 
-
-    /* LIHAT PASSWORD */
 
     if (togglePassword) {
 
@@ -109,8 +148,6 @@ if (loginForm) {
     }
 
 
-    /* LOGIN */
-
     loginForm.addEventListener(
         "submit",
         function (event) {
@@ -128,16 +165,11 @@ if (loginForm) {
             const account =
                 accounts.find(
                     account =>
-                        account.username &&
-                        account.username
-                            .toLowerCase() ===
-                            username.toLowerCase() &&
-                        account.password ===
-                            password
+                        account.username.toLowerCase() ===
+                        username.toLowerCase() &&
+                        account.password === password
                 );
 
-
-            /* BERHASIL */
 
             if (account) {
 
@@ -180,9 +212,6 @@ if (loginForm) {
 
             }
 
-
-            /* GAGAL */
-
             else {
 
                 message.textContent =
@@ -202,7 +231,7 @@ if (loginForm) {
 
 
 /* =====================================
-   CEK ADMIN PANEL
+   ADMIN PANEL
 ===================================== */
 
 const accountTable =
@@ -241,7 +270,7 @@ if (accountTable) {
 
 
 /* =====================================
-   TAMPILKAN AKUN
+   DISPLAY AKUN
 ===================================== */
 
 function displayAccounts() {
@@ -328,7 +357,7 @@ function displayAccounts() {
 
 
 /* =====================================
-   BUKA MODAL
+   MODAL
 ===================================== */
 
 function openModal(index = null) {
@@ -382,7 +411,7 @@ function openModal(index = null) {
             accounts[index].password;
 
         role.value =
-            accounts[index].role || "user";
+            accounts[index].role;
 
         editIndex.value =
             index;
@@ -394,26 +423,18 @@ function openModal(index = null) {
         title.textContent =
             "Tambah Akun";
 
-        username.value =
-            "";
+        username.value = "";
 
-        password.value =
-            "";
+        password.value = "";
 
-        role.value =
-            "user";
+        role.value = "user";
 
-        editIndex.value =
-            "";
+        editIndex.value = "";
 
     }
 
 }
 
-
-/* =====================================
-   TUTUP MODAL
-===================================== */
 
 function closeModal() {
 
@@ -422,9 +443,7 @@ function closeModal() {
             "accountModal"
         );
 
-
     if (!modal) return;
-
 
     modal.classList.remove("show");
 
@@ -432,7 +451,7 @@ function closeModal() {
 
 
 /* =====================================
-   TAMBAH / EDIT
+   FORM AKUN
 ===================================== */
 
 const accountForm =
@@ -483,8 +502,6 @@ if (accountForm) {
                     .value;
 
 
-            /* USERNAME */
-
             if (username === "") {
 
                 alert(
@@ -495,8 +512,6 @@ if (accountForm) {
 
             }
 
-
-            /* PASSWORD */
 
             if (password.length < 4) {
 
@@ -509,8 +524,6 @@ if (accountForm) {
             }
 
 
-            /* DUPLIKAT */
-
             const duplicate =
                 accounts.some(
                     function (
@@ -519,8 +532,7 @@ if (accountForm) {
                     ) {
 
                         return (
-                            account.username
-                                .toLowerCase() ===
+                            account.username.toLowerCase() ===
                             username.toLowerCase() &&
                             index != editIndex
                         );
@@ -540,8 +552,6 @@ if (accountForm) {
             }
 
 
-            /* EDIT */
-
             if (editIndex !== "") {
 
                 accounts[editIndex] = {
@@ -558,9 +568,6 @@ if (accountForm) {
                 };
 
             }
-
-
-            /* TAMBAH */
 
             else {
 
@@ -579,8 +586,6 @@ if (accountForm) {
 
             }
 
-
-            /* SIMPAN */
 
             localStorage.setItem(
                 "accounts",
@@ -615,14 +620,13 @@ function editAccount(index) {
 
 
 /* =====================================
-   HAPUS
+   DELETE
 ===================================== */
 
 function deleteAccount(index) {
 
     if (
-        accounts[index].username
-            .toLowerCase() ===
+        accounts[index].username.toLowerCase() ===
         "admin"
     ) {
 
@@ -678,69 +682,7 @@ function logoutAdmin() {
 
 
 /* =====================================
-   MOBILE SIDEBAR
-===================================== */
-
-function toggleSidebar() {
-
-    const sidebar =
-        document.getElementById(
-            "sidebar"
-        );
-
-    const overlay =
-        document.getElementById(
-            "sidebarOverlay"
-        );
-
-
-    if (!sidebar || !overlay) return;
-
-
-    sidebar.classList.toggle(
-        "mobile-open"
-    );
-
-    overlay.classList.toggle(
-        "show"
-    );
-
-}
-
-
-/* =====================================
-   TUTUP SIDEBAR
-===================================== */
-
-function closeSidebar() {
-
-    const sidebar =
-        document.getElementById(
-            "sidebar"
-        );
-
-    const overlay =
-        document.getElementById(
-            "sidebarOverlay"
-        );
-
-
-    if (!sidebar || !overlay) return;
-
-
-    sidebar.classList.remove(
-        "mobile-open"
-    );
-
-    overlay.classList.remove(
-        "show"
-    );
-
-}
-
-
-/* =====================================
-   ESC UNTUK TUTUP SIDEBAR / MODAL
+   TUTUP SIDEBAR SAAT TEKAN ESC
 ===================================== */
 
 document.addEventListener(
@@ -757,3 +699,33 @@ document.addEventListener(
 
     }
 );
+
+
+/* =====================================
+   KLIK DI LUAR MODAL
+===================================== */
+
+const modal =
+    document.getElementById(
+        "accountModal"
+    );
+
+
+if (modal) {
+
+    modal.addEventListener(
+        "click",
+        function (event) {
+
+            if (
+                event.target === modal
+            ) {
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+}
