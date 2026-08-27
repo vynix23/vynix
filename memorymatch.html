@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Memory Match | Vynix</title>
+
+    <style>
+
+        /* =================================
+           RESET
+        ================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+
+            color: white;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    #312e81,
+                    transparent 40%
+                ),
+                radial-gradient(
+                    circle at bottom right,
+                    #0e7490,
+                    transparent 40%
+                ),
+                #020617;
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            padding: 20px;
+
+            overflow-x: hidden;
+        }
+
+
+        /* =================================
+           BACKGROUND
+        ================================= */
+
+        .background {
+            position: fixed;
+
+            inset: 0;
+
+            overflow: hidden;
+
+            pointer-events: none;
+
+            z-index: -1;
+        }
+
+        .circle {
+            position: absolute;
+
+            border-radius: 50%;
+
+            filter: blur(20px);
+
+            opacity: .35;
+
+            animation:
+                floating 8s infinite ease-in-out;
+        }
+
+        .circle-1 {
+            width: 280px;
+            height: 280px;
+
+            background: #6366f1;
+
+            top: -100px;
+            left: -100px;
+        }
+
+        .circle-2 {
+            width: 300px;
+            height: 300px;
+
+            background: #06b6d4;
+
+            right: -120px;
+            bottom: -120px;
+
+            animation-delay: 2s;
+        }
+
+        .circle-3 {
+            width: 180px;
+            height: 180px;
+
+            background: #8b5cf6;
+
+            right: 20%;
+            top: 10%;
+
+            animation-delay: 4s;
+        }
+
+        @keyframes floating {
+
+            0% {
+                transform: translate(0,0);
+            }
+
+            50% {
+                transform: translate(25px,-25px);
+            }
+
+            100% {
+                transform: translate(0,0);
+            }
+
+        }
+
+
+        /* =================================
+           GAME CONTAINER
+        ================================= */
+
+        .game-container {
+            width: 100%;
+
+            max-width: 650px;
+
+            padding: 28px;
+
+            border-radius: 25px;
+
+            background:
+                rgba(255,255,255,.06);
+
+            border:
+                1px solid rgba(255,255,255,.1);
+
+            backdrop-filter: blur(25px);
+
+            -webkit-backdrop-filter:
+                blur(25px);
+
+            box-shadow:
+                0 25px 70px rgba(0,0,0,.45);
+
+            text-align: center;
+        }
+
+
+        /* =================================
+           TOP
+        ================================= */
+
+        .top {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 20px;
+        }
+
+        .back-button {
+            color: #cbd5e1;
+
+            text-decoration: none;
+
+            padding: 9px 13px;
+
+            border-radius: 9px;
+
+            background:
+                rgba(255,255,255,.06);
+
+            transition: .3s;
+        }
+
+        .back-button:hover {
+            background:
+                rgba(255,255,255,.12);
+
+            color: white;
+        }
+
+        .game-label {
+            color: #818cf8;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            letter-spacing: 1px;
+        }
+
+
+        /* =================================
+           TITLE
+        ================================= */
+
+        .game-icon {
+            width: 70px;
+            height: 70px;
+
+            margin: 0 auto 15px;
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            border-radius: 20px;
+
+            font-size: 32px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6366f1,
+                    #06b6d4
+                );
+
+            box-shadow:
+                0 12px 35px rgba(99,102,241,.3);
+        }
+
+        h1 {
+            font-size: 34px;
+
+            margin-bottom: 8px;
+        }
+
+        .description {
+            color: #94a3b8;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+
+            margin-bottom: 22px;
+        }
+
+
+        /* =================================
+           STATS
+        ================================= */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3,1fr);
+
+            gap: 10px;
+
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            padding: 14px;
+
+            border-radius: 14px;
+
+            background:
+                rgba(255,255,255,.05);
+
+            border:
+                1px solid rgba(255,255,255,.08);
+        }
+
+        .stat p {
+            color: #64748b;
+
+            font-size: 11px;
+
+            margin-bottom: 5px;
+        }
+
+        .stat h2 {
+            font-size: 23px;
+        }
+
+
+        /* =================================
+           BOARD
+        ================================= */
+
+        .board {
+            width: 100%;
+
+            max-width: 480px;
+
+            margin: 0 auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4,1fr);
+
+            gap: 10px;
+        }
+
+
+        /* =================================
+           CARD
+        ================================= */
+
+        .card {
+            aspect-ratio: 1 / 1;
+
+            border: none;
+
+            border-radius: 14px;
+
+            cursor: pointer;
+
+            background: transparent;
+
+            perspective: 800px;
+        }
+
+        .card-inner {
+            position: relative;
+
+            width: 100%;
+            height: 100%;
+
+            transition:
+                transform .4s;
+
+            transform-style:
+                preserve-3d;
+        }
+
+        .card.flipped .card-inner,
+        .card.matched .card-inner {
+            transform:
+                rotateY(180deg);
+        }
+
+        .card-front,
+        .card-back {
+
+            position: absolute;
+
+            inset: 0;
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            border-radius: 14px;
+
+            backface-visibility: hidden;
+
+            -webkit-backface-visibility:
+                hidden;
+        }
+
+
+        /* CARD BACK */
+
+        .card-back {
+            background:
+                linear-gradient(
+                    135deg,
+                    #1e1b4b,
+                    #164e63
+                );
+
+            border:
+                1px solid
+                rgba(129,140,248,.25);
+
+            font-size: 25px;
+        }
+
+
+        /* CARD FRONT */
+
+        .card-front {
+            transform:
+                rotateY(180deg);
+
+            background:
+                rgba(255,255,255,.1);
+
+            border:
+                1px solid
+                rgba(255,255,255,.12);
+
+            font-size: 32px;
+        }
+
+        .card.matched .card-front {
+            background:
+                rgba(34,211,238,.15);
+
+            border-color:
+                rgba(34,211,238,.4);
+        }
+
+        .card.disabled {
+            cursor: default;
+        }
+
+
+        /* =================================
+           START BUTTON
+        ================================= */
+
+        .start-button {
+            width: 100%;
+
+            margin-top: 22px;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background:
+                rgba(255,255,255,.08);
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: .3s;
+        }
+
+        .start-button:hover {
+            background:
+                rgba(255,255,255,.14);
+        }
+
+
+        /* =================================
+           RESULT
+        ================================= */
+
+        .result {
+            display: none;
+
+            margin-top: 20px;
+
+            padding: 20px;
+
+            border-radius: 15px;
+
+            background:
+                rgba(99,102,241,.1);
+
+            border:
+                1px solid
+                rgba(129,140,248,.2);
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .result h2 {
+            margin-bottom: 8px;
+        }
+
+        .result-score {
+            font-size: 26px;
+
+            font-weight: bold;
+
+            margin-bottom: 7px;
+        }
+
+        .result-xp {
+            color: #67e8f9;
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+        }
+
+        .result p {
+            color: #94a3b8;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =================================
+           MOBILE
+        ================================= */
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 12px;
+            }
+
+            .game-container {
+                padding: 20px 14px;
+
+                border-radius: 20px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .description {
+                font-size: 13px;
+            }
+
+            .board {
+                gap: 7px;
+            }
+
+            .card,
+            .card-front,
+            .card-back {
+                border-radius: 10px;
+            }
+
+            .card-front {
+                font-size: 25px;
+            }
+
+            .card-back {
+                font-size: 20px;
+            }
+
+            .stat {
+                padding: 11px 5px;
+            }
+
+            .stat h2 {
+                font-size: 20px;
+            }
+
+        }
+
+
+        @media (max-width: 380px) {
+
+            .board {
+                gap: 5px;
+            }
+
+            .card-front {
+                font-size: 21px;
+            }
+
+            .card-back {
+                font-size: 17px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- BACKGROUND -->
+
+    <div class="background">
+
+        <div class="circle circle-1"></div>
+
+        <div class="circle circle-2"></div>
+
+        <div class="circle circle-3"></div>
+
+    </div>
+
+
+
+    <!-- GAME -->
+
+    <main class="game-container">
+
+
+        <!-- TOP -->
+
+        <div class="top">
+
+            <a
+                href="home.html"
+                class="back-button"
+            >
+                ← Home
+            </a>
+
+            <div class="game-label">
+                VYNIX GAME #02
+            </div>
+
+        </div>
+
+
+
+        <!-- TITLE -->
+
+        <div class="game-icon">
+            🧠
+        </div>
+
+        <h1>
+            Memory Match
+        </h1>
+
+        <p class="description">
+            Cari semua pasangan kartu
+            secepat mungkin!
+        </p>
+
+
+
+        <!-- STATS -->
+
+        <div class="stats">
+
+            <div class="stat">
+
+                <p>
+                    PASANGAN
+                </p>
+
+                <h2 id="matches">
+                    0/8
+                </h2>
+
+            </div>
+
+
+            <div class="stat">
+
+                <p>
+                    WAKTU
+                </p>
+
+                <h2>
+                    <span id="time">
+                        60
+                    </span>s
+                </h2>
+
+            </div>
+
+
+            <div class="stat">
+
+                <p>
+                    BEST
+                </p>
+
+                <h2 id="best">
+                    -
+                </h2>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- BOARD -->
+
+        <div
+            class="board"
+            id="board"
+        ></div>
+
+
+
+        <!-- START -->
+
+        <button
+            class="start-button"
+            id="startButton"
+        >
+            🧠 Mulai Game
+        </button>
+
+
+
+        <!-- RESULT -->
+
+        <div
+            class="result"
+            id="result"
+        >
+
+            <h2>
+                🎉 Berhasil!
+            </h2>
+
+            <div
+                class="result-score"
+                id="resultScore"
+            >
+                -
+            </div>
+
+            <div
+                class="result-xp"
+                id="resultXP"
+            >
+                +0 XP
+            </div>
+
+            <p id="resultText">
+                -
+            </p>
+
+        </div>
+
+
+    </main>
+
+
+
+    <script>
+
+        /* =================================
+           LOGIN
+        ================================= */
+
+        const currentUser =
+            JSON.parse(
+                localStorage.getItem(
+                    "currentUser"
+                )
+            );
+
+
+        if (
+            !currentUser ||
+            currentUser.role !== "user"
+        ) {
+
+            window.location.href =
+                "index.html";
+
+        }
+
+
+
+        /* =================================
+           ELEMENT
+        ================================= */
+
+        const board =
+            document.getElementById(
+                "board"
+            );
+
+        const startButton =
+            document.getElementById(
+                "startButton"
+            );
+
+        const matchesDisplay =
+            document.getElementById(
+                "matches"
+            );
+
+        const timeDisplay =
+            document.getElementById(
+                "time"
+            );
+
+        const bestDisplay =
+            document.getElementById(
+                "best"
+            );
+
+        const result =
+            document.getElementById(
+                "result"
+            );
+
+        const resultScore =
+            document.getElementById(
+                "resultScore"
+            );
+
+        const resultXP =
+            document.getElementById(
+                "resultXP"
+            );
+
+        const resultText =
+            document.getElementById(
+                "resultText"
+            );
+
+
+
+        /* =================================
+           GAME DATA
+        ================================= */
+
+        const symbols = [
+
+            "🍎",
+            "🍕",
+            "🚀",
+            "⚽",
+            "🎮",
+            "🐱",
+            "⭐",
+            "🔥"
+
+        ];
+
+
+        let cards = [];
+
+        let firstCard = null;
+
+        let secondCard = null;
+
+        let lockBoard = false;
+
+        let matchedPairs = 0;
+
+        let moves = 0;
+
+        let time = 60;
+
+        let timer;
+
+        let gameRunning = false;
+
+
+        const bestKey =
+            "memoryBest_" +
+            currentUser.username;
+
+
+        let best =
+            Number(
+                localStorage.getItem(
+                    bestKey
+                )
+            ) || 0;
+
+
+        if (best > 0) {
+
+            bestDisplay.textContent =
+                best + "s";
+
+        }
+
+
+
+        /* =================================
+           SHUFFLE
+        ================================= */
+
+        function shuffle(array) {
+
+            for (
+                let i = array.length - 1;
+                i > 0;
+                i--
+            ) {
+
+                const random =
+                    Math.floor(
+                        Math.random() *
+                        (i + 1)
+                    );
+
+                [
+                    array[i],
+                    array[random]
+                ] = [
+                    array[random],
+                    array[i]
+                ];
+
+            }
+
+            return array;
+
+        }
+
+
+
+        /* =================================
+           CREATE BOARD
+        ================================= */
+
+        function createBoard() {
+
+            board.innerHTML = "";
+
+            cards =
+                shuffle(
+                    [
+                        ...symbols,
+                        ...symbols
+                    ]
+                );
+
+
+            cards.forEach(
+                function(symbol, index) {
+
+                    const card =
+                        document.createElement(
+                            "button"
+                        );
+
+
+                    card.className =
+                        "card";
+
+
+                    card.dataset.symbol =
+                        symbol;
+
+
+                    card.innerHTML = `
+
+                        <div class="card-inner">
+
+                            <div class="card-back">
+                                ?
+                            </div>
+
+                            <div class="card-front">
+                                ${symbol}
+                            </div>
+
+                        </div>
+
+                    `;
+
+
+                    card.addEventListener(
+                        "click",
+                        function() {
+
+                            flipCard(card);
+
+                        }
+                    );
+
+
+                    board.appendChild(card);
+
+                }
+            );
+
+        }
+
+
+
+        /* =================================
+           START
+        ================================= */
+
+        startButton.addEventListener(
+            "click",
+            startGame
+        );
+
+
+        function startGame() {
+
+            clearInterval(timer);
+
+
+            matchedPairs = 0;
+
+            moves = 0;
+
+            time = 60;
+
+            firstCard = null;
+
+            secondCard = null;
+
+            lockBoard = false;
+
+            gameRunning = true;
+
+
+            matchesDisplay.textContent =
+                "0/8";
+
+            timeDisplay.textContent =
+                "60";
+
+
+            result.classList.remove(
+                "show"
+            );
+
+
+            createBoard();
+
+
+            startButton.disabled =
+                true;
+
+            startButton.textContent =
+                "🔥 Game Berlangsung...";
+
+
+            timer =
+                setInterval(
+                    function() {
+
+                        time--;
+
+                        timeDisplay.textContent =
+                            time;
+
+
+                        if (time <= 0) {
+
+                            loseGame();
+
+                        }
+
+                    },
+                    1000
+                );
+
+        }
+
+
+
+        /* =================================
+           FLIP CARD
+        ================================= */
+
+        function flipCard(card) {
+
+            if (!gameRunning) return;
+
+            if (lockBoard) return;
+
+            if (
+                card === firstCard
+            ) return;
+
+            if (
+                card.classList.contains(
+                    "matched"
+                )
+            ) return;
+
+
+            card.classList.add(
+                "flipped"
+            );
+
+
+            if (!firstCard) {
+
+                firstCard = card;
+
+                return;
+
+            }
+
+
+            secondCard = card;
+
+            moves++;
+
+
+            checkMatch();
+
+        }
+
+
+
+        /* =================================
+           CHECK MATCH
+        ================================= */
+
+        function checkMatch() {
+
+            const isMatch =
+                firstCard.dataset.symbol ===
+                secondCard.dataset.symbol;
+
+
+            if (isMatch) {
+
+                disableCards();
+
+            }
+
+            else {
+
+                unflipCards();
+
+            }
+
+        }
+
+
+
+        /* =================================
+           MATCH
+        ================================= */
+
+        function disableCards() {
+
+            firstCard.classList.add(
+                "matched"
+            );
+
+            secondCard.classList.add(
+                "matched"
+            );
+
+
+            matchedPairs++;
+
+
+            matchesDisplay.textContent =
+                matchedPairs + "/8";
+
+
+            resetCards();
+
+
+            if (
+                matchedPairs === 8
+            ) {
+
+                winGame();
+
+            }
+
+        }
+
+
+
+        /* =================================
+           WRONG CARDS
+        ================================= */
+
+        function unflipCards() {
+
+            lockBoard = true;
+
+
+            setTimeout(
+                function() {
+
+                    firstCard.classList.remove(
+                        "flipped"
+                    );
+
+                    secondCard.classList.remove(
+                        "flipped"
+                    );
+
+
+                    resetCards();
+
+                },
+                700
+            );
+
+        }
+
+
+
+        /* =================================
+           RESET
+        ================================= */
+
+        function resetCards() {
+
+            firstCard = null;
+
+            secondCard = null;
+
+            lockBoard = false;
+
+        }
+
+
+
+        /* =================================
+           WIN
+        ================================= */
+
+        function winGame() {
+
+            gameRunning = false;
+
+            clearInterval(timer);
+
+
+            const timeUsed =
+                60 - time;
+
+
+            /*
+             * XP dasar 50.
+             *
+             * Bonus berdasarkan
+             * kecepatan.
+             */
+
+            let earnedXP =
+                50;
+
+
+            if (timeUsed <= 20) {
+
+                earnedXP += 30;
+
+            }
+
+            else if (
+                timeUsed <= 35
+            ) {
+
+                earnedXP += 20;
+
+            }
+
+            else if (
+                timeUsed <= 50
+            ) {
+
+                earnedXP += 10;
+
+            }
+
+
+            /*
+             * Bonus kalau sedikit salah.
+             */
+
+            if (moves <= 10) {
+
+                earnedXP += 10;
+
+            }
+
+
+            /* BEST TIME */
+
+            let newRecord = false;
+
+
+            if (
+                best === 0 ||
+                timeUsed < best
+            ) {
+
+                best = timeUsed;
+
+                newRecord = true;
+
+
+                localStorage.setItem(
+                    bestKey,
+                    best
+                );
+
+
+                bestDisplay.textContent =
+                    best + "s";
+
+            }
+
+
+            addXP(earnedXP);
+
+
+            resultScore.textContent =
+                timeUsed +
+                " detik • " +
+                moves +
+                " langkah";
+
+
+            resultXP.textContent =
+                "+" +
+                earnedXP +
+                " XP";
+
+
+            if (newRecord) {
+
+                resultText.textContent =
+                    "🔥 Rekor baru! " +
+                    "Kamu menyelesaikan semua pasangan dengan sangat cepat.";
+
+            }
+
+            else {
+
+                resultText.textContent =
+                    "Mantap! Semua kartu berhasil ditemukan.";
+
+            }
+
+
+            result.classList.add(
+                "show"
+            );
+
+
+            startButton.disabled =
+                false;
+
+            startButton.textContent =
+                "🔄 Main Lagi";
+
+        }
+
+
+
+        /* =================================
+           TIME OUT
+        ================================= */
+
+        function loseGame() {
+
+            gameRunning = false;
+
+            clearInterval(timer);
+
+
+            /*
+             * Tetap beri sedikit XP
+             * karena sudah bermain.
+             */
+
+            const earnedXP = 10;
+
+
+            addXP(earnedXP);
+
+
+            resultScore.textContent =
+                "Waktu Habis";
+
+
+            resultXP.textContent =
+                "+" +
+                earnedXP +
+                " XP";
+
+
+            resultText.textContent =
+                "Belum selesai kali ini. Coba lagi dan cari semua pasangan lebih cepat!";
+
+
+            result.classList.add(
+                "show"
+            );
+
+
+            startButton.disabled =
+                false;
+
+            startButton.textContent =
+                "🔄 Coba Lagi";
+
+        }
+
+
+
+        /* =================================
+           XP SYSTEM
+        ================================= */
+
+        function addXP(amount) {
+
+            const storageKey =
+                "playerData_" +
+                currentUser.username;
+
+
+            let playerData =
+                JSON.parse(
+                    localStorage.getItem(
+                        storageKey
+                    )
+                ) || {
+
+                    xp: 0,
+
+                    level: 1
+
+                };
+
+
+            playerData.xp += amount;
+
+
+            while (
+                playerData.xp >=
+                playerData.level * 100
+            ) {
+
+                playerData.xp -=
+                    playerData.level * 100;
+
+                playerData.level++;
+
+            }
+
+
+            localStorage.setItem(
+                storageKey,
+                JSON.stringify(
+                    playerData
+                )
+            );
+
+        }
+
+    </script>
+
+</body>
+
+</html>

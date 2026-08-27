@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Reaction Test | Vynix</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            padding: 20px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            color: white;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    #312e81,
+                    transparent 40%
+                ),
+                radial-gradient(
+                    circle at bottom right,
+                    #0e7490,
+                    transparent 40%
+                ),
+                #020617;
+        }
+
+        .background {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(20px);
+            opacity: .35;
+            animation: floating 8s infinite ease-in-out;
+        }
+
+        .circle-1 {
+            width: 280px;
+            height: 280px;
+            background: #6366f1;
+            top: -100px;
+            left: -100px;
+        }
+
+        .circle-2 {
+            width: 300px;
+            height: 300px;
+            background: #06b6d4;
+            right: -120px;
+            bottom: -120px;
+            animation-delay: 2s;
+        }
+
+        @keyframes floating {
+
+            0% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(25px, -25px);
+            }
+
+            100% {
+                transform: translate(0, 0);
+            }
+
+        }
+
+        .game-container {
+            width: 100%;
+            max-width: 650px;
+
+            padding: 28px;
+
+            border-radius: 25px;
+
+            background:
+                rgba(255,255,255,.06);
+
+            border:
+                1px solid rgba(255,255,255,.1);
+
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+
+            box-shadow:
+                0 25px 70px rgba(0,0,0,.45);
+
+            text-align: center;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+        .back-button {
+            color: #cbd5e1;
+            text-decoration: none;
+
+            padding: 9px 13px;
+
+            border-radius: 9px;
+
+            background:
+                rgba(255,255,255,.06);
+        }
+
+        .game-label {
+            color: #818cf8;
+
+            font-size: 12px;
+            font-weight: bold;
+
+            letter-spacing: 1px;
+        }
+
+        .game-icon {
+            width: 70px;
+            height: 70px;
+
+            margin: 0 auto 15px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            border-radius: 20px;
+
+            font-size: 32px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6366f1,
+                    #06b6d4
+                );
+        }
+
+        h1 {
+            font-size: 34px;
+            margin-bottom: 8px;
+        }
+
+        .description {
+            color: #94a3b8;
+
+            font-size: 14px;
+            line-height: 1.6;
+
+            margin-bottom: 20px;
+        }
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 10px;
+
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            padding: 14px;
+
+            border-radius: 14px;
+
+            background:
+                rgba(255,255,255,.05);
+
+            border:
+                1px solid rgba(255,255,255,.08);
+        }
+
+        .stat p {
+            color: #64748b;
+
+            font-size: 11px;
+
+            margin-bottom: 5px;
+        }
+
+        .stat h2 {
+            font-size: 21px;
+        }
+
+        /* REACTION AREA */
+
+        .reaction-area {
+            width: 100%;
+            height: 300px;
+
+            border-radius: 20px;
+
+            background:
+                rgba(255,255,255,.05);
+
+            border:
+                1px solid rgba(255,255,255,.1);
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            cursor: pointer;
+
+            user-select: none;
+
+            transition:
+                background .15s,
+                transform .1s;
+        }
+
+        .reaction-area.waiting {
+            background: #b91c1c;
+        }
+
+        .reaction-area.ready {
+            background: #16a34a;
+        }
+
+        .reaction-area.too-soon {
+            background: #92400e;
+        }
+
+        .reaction-content {
+            padding: 20px;
+        }
+
+        .reaction-icon {
+            font-size: 50px;
+
+            margin-bottom: 15px;
+        }
+
+        .reaction-title {
+            font-size: 25px;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+        }
+
+        .reaction-text {
+            color: #cbd5e1;
+
+            font-size: 14px;
+        }
+
+        .ready .reaction-text {
+            color: white;
+        }
+
+        .start-button {
+            width: 100%;
+
+            margin-top: 20px;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6366f1,
+                    #06b6d4
+                );
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .result {
+            display: none;
+
+            margin-top: 20px;
+
+            padding: 20px;
+
+            border-radius: 15px;
+
+            background:
+                rgba(99,102,241,.1);
+
+            border:
+                1px solid
+                rgba(129,140,248,.2);
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .result h2 {
+            margin-bottom: 8px;
+        }
+
+        .result-time {
+            font-size: 30px;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+        }
+
+        .result-xp {
+            color: #67e8f9;
+
+            font-size: 20px;
+
+            font-weight: bold;
+        }
+
+        .result p {
+            color: #94a3b8;
+
+            font-size: 13px;
+
+            margin-top: 8px;
+
+            line-height: 1.5;
+        }
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 12px;
+            }
+
+            .game-container {
+                padding: 20px 14px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .reaction-area {
+                height: 260px;
+            }
+
+            .reaction-title {
+                font-size: 22px;
+            }
+
+            .reaction-icon {
+                font-size: 42px;
+            }
+
+            .stat {
+                padding: 11px 5px;
+            }
+
+            .stat h2 {
+                font-size: 18px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="background">
+
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+
+    </div>
+
+
+    <main class="game-container">
+
+
+        <div class="top">
+
+            <a
+                href="home.html"
+                class="back-button"
+            >
+                ← Home
+            </a>
+
+            <div class="game-label">
+                VYNIX GAME #03
+            </div>
+
+        </div>
+
+
+        <div class="game-icon">
+            ⚡
+        </div>
+
+
+        <h1>
+            Reaction Test
+        </h1>
+
+
+        <p class="description">
+            Tunggu sampai layar hijau,
+            lalu klik secepat mungkin!
+        </p>
+
+
+        <div class="stats">
+
+            <div class="stat">
+
+                <p>
+                    REAKSI TERAKHIR
+                </p>
+
+                <h2 id="lastTime">
+                    -
+                </h2>
+
+            </div>
+
+
+            <div class="stat">
+
+                <p>
+                    BEST
+                </p>
+
+                <h2 id="bestTime">
+                    -
+                </h2>
+
+            </div>
+
+
+            <div class="stat">
+
+                <p>
+                    XP
+                </p>
+
+                <h2 id="xpDisplay">
+                    +0
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="reaction-area"
+            id="reactionArea"
+        >
+
+            <div class="reaction-content">
+
+                <div
+                    class="reaction-icon"
+                    id="reactionIcon"
+                >
+                    ⚡
+                </div>
+
+                <div
+                    class="reaction-title"
+                    id="reactionTitle"
+                >
+                    Tekan Mulai
+                </div>
+
+                <div
+                    class="reaction-text"
+                    id="reactionText"
+                >
+                    Klik tombol di bawah untuk memulai.
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="start-button"
+            id="startButton"
+        >
+            ⚡ Mulai Test
+        </button>
+
+
+        <div
+            class="result"
+            id="result"
+        >
+
+            <h2>
+                🎯 Hasil Kamu
+            </h2>
+
+            <div
+                class="result-time"
+                id="resultTime"
+            >
+                -
+            </div>
+
+            <div
+                class="result-xp"
+                id="resultXP"
+            >
+                +0 XP
+            </div>
+
+            <p id="resultText">
+                -
+            </p>
+
+        </div>
+
+
+    </main>
+
+
+    <script>
+
+        /* =================================
+           CEK LOGIN
+        ================================= */
+
+        const currentUser =
+            JSON.parse(
+                localStorage.getItem(
+                    "currentUser"
+                )
+            );
+
+
+        if (
+            !currentUser ||
+            currentUser.role !== "user"
+        ) {
+
+            window.location.href =
+                "index.html";
+
+        }
+
+
+        /* =================================
+           ELEMENT
+        ================================= */
+
+        const reactionArea =
+            document.getElementById(
+                "reactionArea"
+            );
+
+        const reactionIcon =
+            document.getElementById(
+                "reactionIcon"
+            );
+
+        const reactionTitle =
+            document.getElementById(
+                "reactionTitle"
+            );
+
+        const reactionText =
+            document.getElementById(
+                "reactionText"
+            );
+
+        const startButton =
+            document.getElementById(
+                "startButton"
+            );
+
+        const lastTime =
+            document.getElementById(
+                "lastTime"
+            );
+
+        const bestTime =
+            document.getElementById(
+                "bestTime"
+            );
+
+        const xpDisplay =
+            document.getElementById(
+                "xpDisplay"
+            );
+
+        const result =
+            document.getElementById(
+                "result"
+            );
+
+        const resultTime =
+            document.getElementById(
+                "resultTime"
+            );
+
+        const resultXP =
+            document.getElementById(
+                "resultXP"
+            );
+
+        const resultText =
+            document.getElementById(
+                "resultText"
+            );
+
+
+        /* =================================
+           DATA
+        ================================= */
+
+        let state = "idle";
+
+        let startTime = 0;
+
+        let timeout;
+
+        const bestKey =
+            "reactionBest_" +
+            currentUser.username;
+
+
+        let best =
+            Number(
+                localStorage.getItem(
+                    bestKey
+                )
+            ) || 0;
+
+
+        if (best > 0) {
+
+            bestTime.textContent =
+                best + " ms";
+
+        }
+
+
+        /* =================================
+           START GAME
+        ================================= */
+
+        startButton.addEventListener(
+            "click",
+            startGame
+        );
+
+
+        function startGame() {
+
+            clearTimeout(timeout);
+
+            state = "waiting";
+
+            result.classList.remove(
+                "show"
+            );
+
+            reactionArea.className =
+                "reaction-area waiting";
+
+            reactionIcon.textContent =
+                "⏳";
+
+            reactionTitle.textContent =
+                "Tunggu...";
+
+            reactionText.textContent =
+                "Jangan klik dulu!";
+
+            startButton.disabled =
+                true;
+
+            startButton.textContent =
+                "⏳ Menunggu...";
+
+
+            const randomDelay =
+                Math.floor(
+                    Math.random() * 3000
+                ) + 1500;
+
+
+            timeout =
+                setTimeout(
+                    makeReady,
+                    randomDelay
+                );
+
+        }
+
+
+        /* =================================
+           READY
+        ================================= */
+
+        function makeReady() {
+
+            state = "ready";
+
+            startTime =
+                performance.now();
+
+
+            reactionArea.className =
+                "reaction-area ready";
+
+            reactionIcon.textContent =
+                "🟢";
+
+            reactionTitle.textContent =
+                "KLIK SEKARANG!";
+
+            reactionText.textContent =
+                "Secepat mungkin!";
+
+        }
+
+
+        /* =================================
+           CLICK REACTION AREA
+        ================================= */
+
+        reactionArea.addEventListener(
+            "click",
+            function() {
+
+                if (state === "waiting") {
+
+                    tooSoon();
+
+                    return;
+
+                }
+
+
+                if (state === "ready") {
+
+                    finishGame();
+
+                }
+
+            }
+        );
+
+
+        /* =================================
+           TOO SOON
+        ================================= */
+
+        function tooSoon() {
+
+            clearTimeout(timeout);
+
+            state = "idle";
+
+            reactionArea.className =
+                "reaction-area too-soon";
+
+            reactionIcon.textContent =
+                "❌";
+
+            reactionTitle.textContent =
+                "Terlalu Cepat!";
+
+            reactionText.textContent =
+                "Kamu harus menunggu sampai hijau.";
+
+            startButton.disabled =
+                false;
+
+            startButton.textContent =
+                "🔄 Coba Lagi";
+
+        }
+
+
+        /* =================================
+           FINISH
+        ================================= */
+
+        function finishGame() {
+
+            const reaction =
+                Math.round(
+                    performance.now() -
+                    startTime
+                );
+
+
+            state = "idle";
+
+
+            reactionArea.className =
+                "reaction-area";
+
+            reactionIcon.textContent =
+                "⚡";
+
+            reactionTitle.textContent =
+                reaction + " ms";
+
+            reactionText.textContent =
+                "Klik Mulai Test untuk mencoba lagi.";
+
+
+            lastTime.textContent =
+                reaction + " ms";
+
+
+            /* =============================
+               XP
+            ============================= */
+
+            let earnedXP = 10;
+
+
+            if (reaction < 500) {
+
+                earnedXP = 50;
+
+            }
+
+            else if (reaction < 700) {
+
+                earnedXP = 40;
+
+            }
+
+            else if (reaction < 900) {
+
+                earnedXP = 30;
+
+            }
+
+            else if (reaction < 1200) {
+
+                earnedXP = 20;
+
+            }
+
+
+            /* =============================
+               BEST
+            ============================= */
+
+            let newRecord = false;
+
+
+            if (
+                best === 0 ||
+                reaction < best
+            ) {
+
+                best = reaction;
+
+                newRecord = true;
+
+
+                localStorage.setItem(
+                    bestKey,
+                    best
+                );
+
+
+                bestTime.textContent =
+                    best + " ms";
+
+            }
+
+
+            /* =============================
+               XP
+            ============================= */
+
+            addXP(earnedXP);
+
+
+            xpDisplay.textContent =
+                "+" + earnedXP;
+
+
+            /* =============================
+               RESULT
+            ============================= */
+
+            resultTime.textContent =
+                reaction + " ms";
+
+
+            resultXP.textContent =
+                "+" + earnedXP + " XP";
+
+
+            if (newRecord) {
+
+                resultText.textContent =
+                    "🔥 Rekor baru! Refleks kamu makin cepat.";
+
+            }
+
+            else if (reaction < 500) {
+
+                resultText.textContent =
+                    "⚡ Luar biasa! Reaksi kamu sangat cepat.";
+
+            }
+
+            else if (reaction < 900) {
+
+                resultText.textContent =
+                    "👍 Bagus! Coba lagi untuk mendapatkan waktu lebih cepat.";
+
+            }
+
+            else {
+
+                resultText.textContent =
+                    "💪 Terus latihan! Kamu bisa mendapatkan reaksi yang lebih cepat.";
+
+            }
+
+
+            result.classList.add(
+                "show"
+            );
+
+
+            startButton.disabled =
+                false;
+
+            startButton.textContent =
+                "🔄 Main Lagi";
+
+        }
+
+
+        /* =================================
+           XP SYSTEM
+        ================================= */
+
+        function addXP(amount) {
+
+            const storageKey =
+                "playerData_" +
+                currentUser.username;
+
+
+            let playerData =
+                JSON.parse(
+                    localStorage.getItem(
+                        storageKey
+                    )
+                ) || {
+
+                    xp: 0,
+
+                    level: 1
+
+                };
+
+
+            playerData.xp += amount;
+
+
+            while (
+                playerData.xp >=
+                playerData.level * 100
+            ) {
+
+                playerData.xp -=
+                    playerData.level * 100;
+
+                playerData.level++;
+
+            }
+
+
+            localStorage.setItem(
+                storageKey,
+                JSON.stringify(
+                    playerData
+                )
+            );
+
+        }
+
+    </script>
+
+</body>
+
+</html>

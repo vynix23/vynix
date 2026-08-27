@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Speed Clicker | Vynix</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+
+            color: white;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    #312e81,
+                    transparent 40%
+                ),
+                radial-gradient(
+                    circle at bottom right,
+                    #0e7490,
+                    transparent 40%
+                ),
+                #020617;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 20px;
+        }
+
+
+        /* ===============================
+           BACKGROUND
+        =============================== */
+
+        .background {
+            position: fixed;
+            inset: 0;
+
+            overflow: hidden;
+
+            pointer-events: none;
+
+            z-index: -1;
+        }
+
+        .circle {
+            position: absolute;
+
+            border-radius: 50%;
+
+            filter: blur(15px);
+
+            opacity: 0.35;
+
+            animation: floating 8s infinite ease-in-out;
+        }
+
+        .circle-1 {
+            width: 250px;
+            height: 250px;
+
+            background: #6366f1;
+
+            top: -80px;
+            left: -80px;
+        }
+
+        .circle-2 {
+            width: 300px;
+            height: 300px;
+
+            background: #06b6d4;
+
+            right: -100px;
+            bottom: -100px;
+
+            animation-delay: 2s;
+        }
+
+        @keyframes floating {
+
+            0% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(25px, -25px);
+            }
+
+            100% {
+                transform: translate(0, 0);
+            }
+
+        }
+
+
+        /* ===============================
+           GAME CONTAINER
+        =============================== */
+
+        .game-container {
+            width: 100%;
+            max-width: 600px;
+
+            padding: 30px;
+
+            border-radius: 25px;
+
+            background:
+                rgba(255,255,255,0.06);
+
+            border:
+                1px solid rgba(255,255,255,0.1);
+
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+
+            box-shadow:
+                0 25px 70px rgba(0,0,0,0.4);
+
+            text-align: center;
+        }
+
+
+        /* ===============================
+           TOP
+        =============================== */
+
+        .top {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 30px;
+        }
+
+        .back-button {
+            color: #94a3b8;
+
+            text-decoration: none;
+
+            padding: 9px 13px;
+
+            border-radius: 9px;
+
+            background:
+                rgba(255,255,255,0.06);
+
+            transition: 0.3s;
+        }
+
+        .back-button:hover {
+            color: white;
+
+            background:
+                rgba(255,255,255,0.1);
+        }
+
+        .game-title {
+            font-weight: bold;
+
+            color: #a5b4fc;
+        }
+
+
+        /* ===============================
+           TITLE
+        =============================== */
+
+        .game-icon {
+            width: 75px;
+            height: 75px;
+
+            margin: 0 auto 20px;
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            border-radius: 20px;
+
+            font-size: 35px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6366f1,
+                    #06b6d4
+                );
+
+            box-shadow:
+                0 10px 35px rgba(99,102,241,0.3);
+        }
+
+        h1 {
+            font-size: 34px;
+
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: #94a3b8;
+
+            line-height: 1.6;
+
+            margin-bottom: 30px;
+        }
+
+
+        /* ===============================
+           SCORE
+        =============================== */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 12px;
+
+            margin-bottom: 25px;
+        }
+
+        .stat {
+            padding: 18px;
+
+            border-radius: 15px;
+
+            background:
+                rgba(255,255,255,0.05);
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+        }
+
+        .stat p {
+            color: #64748b;
+
+            font-size: 12px;
+
+            margin-bottom: 6px;
+        }
+
+        .stat h2 {
+            font-size: 27px;
+        }
+
+
+        /* ===============================
+           CLICK BUTTON
+        =============================== */
+
+        .click-button {
+            width: 230px;
+            height: 230px;
+
+            border: none;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6366f1,
+                    #06b6d4
+                );
+
+            color: white;
+
+            font-size: 28px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 15px 40px rgba(99,102,241,0.35);
+
+            transition:
+                transform 0.08s,
+                box-shadow 0.2s;
+
+            user-select: none;
+        }
+
+        .click-button:hover {
+            box-shadow:
+                0 20px 50px rgba(99,102,241,0.5);
+        }
+
+        .click-button:active {
+            transform: scale(0.92);
+        }
+
+        .click-button.disabled {
+            cursor: not-allowed;
+
+            opacity: 0.5;
+
+            transform: none;
+        }
+
+
+        /* ===============================
+           START
+        =============================== */
+
+        .start-button {
+            margin-top: 25px;
+
+            width: 100%;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background:
+                rgba(255,255,255,0.08);
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .start-button:hover {
+            background:
+                rgba(255,255,255,0.14);
+        }
+
+
+        /* ===============================
+           RESULT
+        =============================== */
+
+        .result {
+            display: none;
+
+            margin-top: 25px;
+
+            padding: 20px;
+
+            border-radius: 15px;
+
+            background:
+                rgba(74,222,128,0.08);
+
+            border:
+                1px solid rgba(74,222,128,0.2);
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .result h2 {
+            margin-bottom: 8px;
+        }
+
+        .result p {
+            color: #94a3b8;
+
+            line-height: 1.6;
+        }
+
+        .xp-earned {
+            color: #67e8f9;
+
+            font-size: 24px;
+
+            font-weight: bold;
+
+            margin: 10px 0;
+        }
+
+
+        /* ===============================
+           MOBILE
+        =============================== */
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 12px;
+            }
+
+            .game-container {
+                padding: 22px 16px;
+
+                border-radius: 20px;
+            }
+
+            .top {
+                margin-bottom: 25px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .description {
+                font-size: 14px;
+            }
+
+            .click-button {
+                width: 190px;
+                height: 190px;
+
+                font-size: 24px;
+            }
+
+            .stat {
+                padding: 15px;
+            }
+
+        }
+
+
+        @media (max-width: 380px) {
+
+            .click-button {
+                width: 165px;
+                height: 165px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- BACKGROUND -->
+
+    <div class="background">
+
+        <div class="circle circle-1"></div>
+
+        <div class="circle circle-2"></div>
+
+    </div>
+
+
+
+    <!-- GAME -->
+
+    <div class="game-container">
+
+
+        <!-- TOP -->
+
+        <div class="top">
+
+            <a
+                href="home.html"
+                class="back-button"
+            >
+                ← Home
+            </a>
+
+            <div class="game-title">
+                VYNIX GAME
+            </div>
+
+        </div>
+
+
+
+        <!-- TITLE -->
+
+        <div class="game-icon">
+            🖱️
+        </div>
+
+        <h1>
+            Speed Clicker
+        </h1>
+
+        <p class="description">
+            Klik tombol sebanyak mungkin
+            dalam waktu 10 detik!
+            Semakin banyak klik,
+            semakin banyak XP yang kamu dapat.
+        </p>
+
+
+
+        <!-- STATS -->
+
+        <div class="stats">
+
+            <div class="stat">
+
+                <p>
+                    SCORE
+                </p>
+
+                <h2 id="score">
+                    0
+                </h2>
+
+            </div>
+
+
+            <div class="stat">
+
+                <p>
+                    WAKTU
+                </p>
+
+                <h2>
+                    <span id="time">
+                        10
+                    </span>
+                    s
+                </h2>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- CLICK -->
+
+        <button
+            id="clickButton"
+            class="click-button disabled"
+            disabled
+        >
+            KLIK!
+        </button>
+
+
+
+        <!-- START -->
+
+        <button
+            id="startButton"
+            class="start-button"
+        >
+            🎮 Mulai Game
+        </button>
+
+
+
+        <!-- RESULT -->
+
+        <div
+            id="result"
+            class="result"
+        >
+
+            <h2>
+                🎉 Game Selesai!
+            </h2>
+
+            <div
+                id="xpEarned"
+                class="xp-earned"
+            >
+                +0 XP
+            </div>
+
+            <p id="resultText">
+                -
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <script>
+
+        /* =================================
+           CEK USER
+        ================================= */
+
+        const currentUser =
+            JSON.parse(
+                localStorage.getItem(
+                    "currentUser"
+                )
+            );
+
+
+        if (
+            !currentUser ||
+            currentUser.role !== "user"
+        ) {
+
+            window.location.href =
+                "index.html";
+
+        }
+
+
+
+        /* =================================
+           ELEMENT
+        ================================= */
+
+        const clickButton =
+            document.getElementById(
+                "clickButton"
+            );
+
+        const startButton =
+            document.getElementById(
+                "startButton"
+            );
+
+        const scoreDisplay =
+            document.getElementById(
+                "score"
+            );
+
+        const timeDisplay =
+            document.getElementById(
+                "time"
+            );
+
+        const result =
+            document.getElementById(
+                "result"
+            );
+
+        const xpEarned =
+            document.getElementById(
+                "xpEarned"
+            );
+
+        const resultText =
+            document.getElementById(
+                "resultText"
+            );
+
+
+
+        /* =================================
+           GAME DATA
+        ================================= */
+
+        let score = 0;
+
+        let time = 10;
+
+        let gameRunning = false;
+
+        let timer;
+
+
+
+        /* =================================
+           START GAME
+        ================================= */
+
+        startButton.addEventListener(
+            "click",
+            startGame
+        );
+
+
+        function startGame() {
+
+            score = 0;
+
+            time = 10;
+
+            gameRunning = true;
+
+
+            scoreDisplay.textContent =
+                score;
+
+            timeDisplay.textContent =
+                time;
+
+
+            result.classList.remove(
+                "show"
+            );
+
+
+            clickButton.disabled = false;
+
+            clickButton.classList.remove(
+                "disabled"
+            );
+
+
+            startButton.disabled = true;
+
+            startButton.textContent =
+                "🔥 Game Berlangsung...";
+
+
+            timer =
+                setInterval(
+                    function () {
+
+                        time--;
+
+                        timeDisplay.textContent =
+                            time;
+
+
+                        if (time <= 0) {
+
+                            endGame();
+
+                        }
+
+                    },
+                    1000
+                );
+
+        }
+
+
+
+        /* =================================
+           CLICK
+        ================================= */
+
+        clickButton.addEventListener(
+            "click",
+            function () {
+
+                if (!gameRunning) return;
+
+
+                score++;
+
+
+                scoreDisplay.textContent =
+                    score;
+
+            }
+        );
+
+
+
+        /* =================================
+           END GAME
+        ================================= */
+
+        function endGame() {
+
+            gameRunning = false;
+
+
+            clearInterval(timer);
+
+
+            clickButton.disabled = true;
+
+            clickButton.classList.add(
+                "disabled"
+            );
+
+
+            startButton.disabled = false;
+
+            startButton.textContent =
+                "🔄 Main Lagi";
+
+
+            /*
+             * XP berdasarkan score.
+             *
+             * Setiap 2 klik = 1 XP
+             */
+
+            const earnedXP =
+                Math.floor(score / 2);
+
+
+            addXP(earnedXP);
+
+
+            xpEarned.textContent =
+                "+" + earnedXP + " XP";
+
+
+            resultText.textContent =
+                "Kamu mendapatkan " +
+                earnedXP +
+                " XP dari " +
+                score +
+                " klik!";
+
+
+            result.classList.add(
+                "show"
+            );
+
+        }
+
+
+
+        /* =================================
+           XP SYSTEM
+        ================================= */
+
+        function addXP(amount) {
+
+            const storageKey =
+                "playerData_" +
+                currentUser.username;
+
+
+            let playerData =
+                JSON.parse(
+                    localStorage.getItem(
+                        storageKey
+                    )
+                ) || {
+
+                    xp: 0,
+
+                    level: 1
+
+                };
+
+
+            playerData.xp += amount;
+
+
+            /*
+             * Naik level setiap
+             * 100 XP.
+             */
+
+            while (
+                playerData.xp >=
+                playerData.level * 100
+            ) {
+
+                playerData.xp -=
+                    playerData.level * 100;
+
+                playerData.level++;
+
+            }
+
+
+            localStorage.setItem(
+                storageKey,
+                JSON.stringify(
+                    playerData
+                )
+            );
+
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -4,101 +4,1640 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home | My Website</title>
+
+    <title>Vynix | Game Hub</title>
 
     <style>
+
+        /* =================================
+           RESET
+        ================================= */
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
             min-height: 100vh;
-            background: #f3f4f6;
+            color: white;
+            background:
+                radial-gradient(
+                    circle at top left,
+                    #312e81,
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at bottom right,
+                    #0e7490,
+                    transparent 35%
+                ),
+                #020617;
+
+            overflow-x: hidden;
         }
 
-        nav {
+
+        /* =================================
+           BACKGROUND
+        ================================= */
+
+        .background {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(15px);
+            opacity: 0.35;
+            animation: floating 8s infinite ease-in-out;
+        }
+
+        .circle-1 {
+            width: 280px;
+            height: 280px;
+            background: #6366f1;
+            top: -100px;
+            left: -100px;
+        }
+
+        .circle-2 {
+            width: 300px;
+            height: 300px;
+            background: #06b6d4;
+            right: -120px;
+            bottom: -100px;
+            animation-delay: 2s;
+        }
+
+        .circle-3 {
+            width: 180px;
+            height: 180px;
+            background: #8b5cf6;
+            right: 30%;
+            top: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes floating {
+
+            0% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(25px, -25px);
+            }
+
+            100% {
+                transform: translate(0, 0);
+            }
+
+        }
+
+
+        /* =================================
+           NAVBAR
+        ================================= */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+
             height: 70px;
-            background: #111827;
-            color: white;
+
+            padding: 0 6%;
 
             display: flex;
             align-items: center;
             justify-content: space-between;
 
-            padding: 0 8%;
+            background: rgba(2, 6, 23, 0.85);
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.08);
+
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
 
-        nav h2 {
-            color: #60a5fa;
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            font-size: 21px;
+            font-weight: bold;
         }
 
-        nav a {
-            color: white;
-            text-decoration: none;
-            background: #2563eb;
-
-            padding: 10px 18px;
-            border-radius: 8px;
-        }
-
-        .hero {
-            min-height: calc(100vh - 70px);
+        .brand-logo {
+            width: 42px;
+            height: 42px;
 
             display: flex;
             justify-content: center;
             align-items: center;
 
-            text-align: center;
-            padding: 20px;
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6366f1,
+                    #06b6d4
+                );
+
+            box-shadow:
+                0 8px 25px rgba(99,102,241,0.3);
         }
 
-        .hero-content {
-            background: white;
-            padding: 50px;
-            border-radius: 20px;
+        .brand span {
+            color: #67e8f9;
+        }
 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+
+        /* =================================
+           NAV LINKS
+        ================================= */
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+
+            padding: 9px 13px;
+
+            border-radius: 9px;
+
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: white;
+            background:
+                rgba(255,255,255,0.08);
+        }
+
+
+        /* =================================
+           USER NAV
+        ================================= */
+
+        .user-nav {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .username-nav {
+            color: #a5b4fc;
+            font-weight: bold;
+        }
+
+        .logout-button {
+            border: 1px solid rgba(248,113,113,0.2);
+
+            background:
+                rgba(248,113,113,0.08);
+
+            color: #fca5a5;
+
+            padding: 9px 13px;
+
+            border-radius: 9px;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .logout-button:hover {
+            background:
+                rgba(248,113,113,0.18);
+        }
+
+
+        /* =================================
+           MOBILE MENU BUTTON
+        ================================= */
+
+        .menu-button {
+            display: none;
+
+            width: 42px;
+            height: 42px;
+
+            border: none;
+            border-radius: 10px;
+
+            background:
+                rgba(255,255,255,0.08);
+
+            color: white;
+
+            font-size: 22px;
+
+            cursor: pointer;
+        }
+
+
+        /* =================================
+           MAIN
+        ================================= */
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+
+            margin: auto;
+
+            padding: 45px 25px 60px;
+        }
+
+
+        /* =================================
+           HERO
+        ================================= */
+
+        .hero {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1.5fr)
+                minmax(300px, 1fr);
+
+            gap: 30px;
+
+            align-items: center;
+
+            margin-bottom: 45px;
+        }
+
+        .hero-text {
+            padding: 20px 0;
+        }
+
+        .welcome {
+            color: #818cf8;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            margin-bottom: 10px;
         }
 
         .hero h1 {
-            font-size: 40px;
-            color: #111827;
-            margin-bottom: 15px;
+            font-size: clamp(38px, 5vw, 64px);
+
+            line-height: 1.05;
+
+            margin-bottom: 18px;
         }
 
-        .hero p {
-            color: #6b7280;
-            font-size: 18px;
+        .hero h1 span {
+            background:
+                linear-gradient(
+                    135deg,
+                    #818cf8,
+                    #22d3ee
+                );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-text p {
+            max-width: 600px;
+
+            color: #94a3b8;
+
+            font-size: 17px;
+
+            line-height: 1.7;
+
+            margin-bottom: 25px;
+        }
+
+        .play-button {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 8px;
+
+            padding: 14px 22px;
+
+            border-radius: 12px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6366f1,
+                    #06b6d4
+                );
+
+            box-shadow:
+                0 10px 30px rgba(99,102,241,0.25);
+
+            transition: 0.3s;
+        }
+
+        .play-button:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 15px 35px rgba(99,102,241,0.4);
+        }
+
+
+        /* =================================
+           PROFILE CARD
+        ================================= */
+
+        .profile-card {
+            padding: 25px;
+
+            border-radius: 22px;
+
+            background:
+                rgba(255,255,255,0.06);
+
+            border:
+                1px solid rgba(255,255,255,0.1);
+
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+
+            box-shadow:
+                0 20px 50px rgba(0,0,0,0.25);
+        }
+
+        .profile-top {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+
+            margin-bottom: 22px;
+        }
+
+        .avatar {
+            width: 58px;
+            height: 58px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 17px;
+
+            font-size: 25px;
+            font-weight: bold;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6366f1,
+                    #06b6d4
+                );
+        }
+
+        .profile-top p {
+            color: #94a3b8;
+
+            font-size: 13px;
+
+            margin-bottom: 4px;
+        }
+
+        .profile-top h2 {
+            font-size: 20px;
+        }
+
+        .level-row {
+            display: flex;
+            justify-content: space-between;
+
+            margin-bottom: 8px;
+
+            font-size: 14px;
+        }
+
+        .level {
+            color: #a5b4fc;
+            font-weight: bold;
+        }
+
+        .xp {
+            color: #67e8f9;
+        }
+
+        .xp-bar {
+            width: 100%;
+            height: 10px;
+
+            overflow: hidden;
+
+            border-radius: 20px;
+
+            background:
+                rgba(255,255,255,0.08);
+        }
+
+        .xp-progress {
+            width: 65%;
+            height: 100%;
+
+            border-radius: inherit;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #6366f1,
+                    #22d3ee
+                );
+        }
+
+        .xp-info {
+            display: flex;
+            justify-content: space-between;
+
+            margin-top: 8px;
+
+            color: #64748b;
+
+            font-size: 12px;
+        }
+
+
+        /* =================================
+           SECTION TITLE
+        ================================= */
+
+        .section-title {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: end;
+
+            margin-bottom: 18px;
+        }
+
+        .section-title h2 {
+            font-size: 25px;
+        }
+
+        .section-title p {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+
+        /* =================================
+           GAME CARDS
+        ================================= */
+
+        .games {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
+            gap: 18px;
+
+            margin-bottom: 45px;
+        }
+
+        .game-card {
+            padding: 22px;
+
+            border-radius: 18px;
+
+            background:
+                rgba(255,255,255,0.06);
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+
+            transition: 0.3s;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+
+            border-color:
+                rgba(129,140,248,0.4);
+
+            background:
+                rgba(255,255,255,0.08);
+        }
+
+        .game-icon {
+            width: 55px;
+            height: 55px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            border-radius: 15px;
+
+            font-size: 25px;
+
+            background:
+                rgba(99,102,241,0.18);
+
+            margin-bottom: 18px;
+        }
+
+        .game-card h3 {
+            margin-bottom: 7px;
+        }
+
+        .game-card p {
+            color: #64748b;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+            margin-bottom: 18px;
+        }
+
+        .game-button {
+            display: inline-block;
+
+            color: #a5b4fc;
+
+            text-decoration: none;
+
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .coming-soon {
+            opacity: 0.7;
+        }
+
+
+        /* =================================
+           BOTTOM GRID
+        ================================= */
+
+        .bottom-grid {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1.4fr)
+                minmax(280px, 1fr);
+
+            gap: 20px;
+        }
+
+
+        /* =================================
+           LEADERBOARD
+        ================================= */
+
+        .panel {
+            padding: 25px;
+
+            border-radius: 20px;
+
+            background:
+                rgba(255,255,255,0.05);
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+        }
+
+        .panel-header {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+        .panel-header h2 {
+            font-size: 21px;
+        }
+
+        .panel-header span {
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .leaderboard {
+            display: flex;
+            flex-direction: column;
+
+            gap: 10px;
+        }
+
+        .player {
+            display: grid;
+
+            grid-template-columns:
+                35px 1fr auto;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 12px;
+
+            border-radius: 12px;
+
+            background:
+                rgba(255,255,255,0.04);
+        }
+
+        .rank {
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .player-name {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .player-level {
+            color: #64748b;
+            font-size: 11px;
+
+            margin-top: 3px;
+        }
+
+        .player-xp {
+            color: #67e8f9;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+
+        /* =================================
+           ACHIEVEMENT
+        ================================= */
+
+        .achievement {
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 13px;
+
+            border-radius: 12px;
+
+            background:
+                rgba(255,255,255,0.04);
+
+            margin-bottom: 10px;
+        }
+
+        .achievement-icon {
+            width: 43px;
+            height: 43px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            flex-shrink: 0;
+
+            border-radius: 12px;
+
+            background:
+                rgba(99,102,241,0.18);
+
+            font-size: 20px;
+        }
+
+        .achievement h3 {
+            font-size: 13px;
+            margin-bottom: 3px;
+        }
+
+        .achievement p {
+            color: #64748b;
+            font-size: 11px;
+        }
+
+
+        /* =================================
+           FOOTER
+        ================================= */
+
+        footer {
+            margin-top: 50px;
+
+            padding-top: 25px;
+
+            text-align: center;
+
+            color: #475569;
+
+            font-size: 12px;
+
+            border-top:
+                1px solid rgba(255,255,255,0.06);
+        }
+
+
+        /* =================================
+           TABLET
+        ================================= */
+
+        @media (max-width: 900px) {
+
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-card {
+                max-width: 600px;
+            }
+
+            .games {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+        }
+
+
+        /* =================================
+           MOBILE
+        ================================= */
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                height: 64px;
+                padding: 0 15px;
+            }
+
+            .brand-logo {
+                width: 40px;
+                height: 40px;
+            }
+
+            .brand {
+                font-size: 18px;
+            }
+
+            .menu-button {
+                display: block;
+            }
+
+            .nav-links {
+                position: absolute;
+
+                top: 70px;
+                left: 12px;
+                right: 12px;
+
+                display: none;
+
+                flex-direction: column;
+
+                align-items: stretch;
+
+                padding: 12px;
+
+                border-radius: 15px;
+
+                background:
+                    rgba(15,23,42,0.98);
+
+                border:
+                    1px solid rgba(255,255,255,0.1);
+
+                box-shadow:
+                    0 20px 40px rgba(0,0,0,0.4);
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 13px;
+            }
+
+            .user-nav {
+                display: none;
+            }
+
+            .container {
+                padding: 30px 14px 45px;
+            }
+
+            .hero {
+                gap: 22px;
+                margin-bottom: 32px;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero-text p {
+                font-size: 14px;
+            }
+
+            .profile-card {
+                padding: 20px;
+            }
+
+            .games {
+                grid-template-columns: 1fr;
+            }
+
+            .bottom-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title h2 {
+                font-size: 21px;
+            }
+
+            .panel {
+                padding: 18px;
+            }
+
+        }
+
+
+        /* =================================
+           VERY SMALL PHONE
+        ================================= */
+
+        @media (max-width: 380px) {
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .brand {
+                font-size: 16px;
+            }
+
+            .container {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
         }
 
     </style>
 </head>
 
+
 <body>
 
-    <nav>
-        <h2>MY WEBSITE</h2>
+    <!-- BACKGROUND -->
 
-        <a href="index.html">Logout</a>
-    </nav>
+    <div class="background">
 
-    <section class="hero">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        <div class="circle circle-3"></div>
 
-        <div class="hero-content">
+    </div>
 
-            <h1>Selamat Datang! 👋</h1>
 
-            <p>
-                Kamu berhasil login ke website.
-            </p>
+    <!-- ===============================
+         NAVBAR
+    ================================ -->
+
+    <nav class="navbar">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                V
+            </div>
+
+            <div>
+                <span>Vynix</span> Game Hub
+            </div>
 
         </div>
 
-    </section>
+
+        <button
+            class="menu-button"
+            onclick="toggleMenu()"
+        >
+            ☰
+        </button>
+
+
+        <div class="nav-links" id="navLinks">
+
+            <a href="#home">
+                🏠 Home
+            </a>
+
+            <a href="#games">
+                🎮 Games
+            </a>
+
+            <a href="#leaderboard">
+                🏆 Leaderboard
+            </a>
+
+            <a href="#achievements">
+                🎖️ Achievement
+            </a>
+
+        </div>
+
+
+        <div class="user-nav">
+
+            <span
+                class="username-nav"
+                id="navUsername"
+            >
+                Player
+            </span>
+
+            <button
+                class="logout-button"
+                onclick="logoutUser()"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- ===============================
+         MAIN
+    ================================ -->
+
+    <main
+        class="container"
+        id="home"
+    >
+
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <div class="hero-text">
+
+                <p class="welcome">
+                    🎮 WELCOME TO VYNIX
+                </p>
+
+                <h1>
+                    Play.
+                    <span>
+                        Earn XP.
+                    </span>
+                    Level Up.
+                </h1>
+
+                <p>
+                    Main berbagai game seru di Vynix,
+                    kumpulkan XP, naikkan level,
+                    dan buktikan kemampuanmu di
+                    leaderboard.
+                </p>
+
+                <a
+                    href="#games"
+                    class="play-button"
+                >
+                    🎮 Mulai Bermain
+                </a>
+
+            </div>
+
+
+            <!-- PROFILE -->
+
+            <div class="profile-card">
+
+                <div class="profile-top">
+
+                    <div
+                        class="avatar"
+                        id="avatar"
+                    >
+                        P
+                    </div>
+
+                    <div>
+
+                        <p>
+                            Player
+                        </p>
+
+                        <h2 id="profileUsername">
+                            Player
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="level-row">
+
+                    <span class="level">
+                        LEVEL <span id="playerLevel">1</span>
+                    </span>
+
+                    <span class="xp">
+                        <span id="currentXP">0</span> XP
+                    </span>
+
+                </div>
+
+
+                <div class="xp-bar">
+
+                    <div
+                        class="xp-progress"
+                        id="xpProgress"
+                    ></div>
+
+                </div>
+
+
+                <div class="xp-info">
+
+                    <span>
+                        Progress Level
+                    </span>
+
+                    <span id="nextXP">
+                        100 XP
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ===============================
+             GAMES
+        ================================ -->
+
+        <section id="games">
+
+            <div class="section-title">
+
+                <div>
+
+                    <h2>
+                        🎮 Games
+                    </h2>
+
+                    <p>
+                        Pilih game dan mulai kumpulkan XP.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="games">
+
+
+                <!-- GAME 1 -->
+
+                <div class="game-card">
+
+                    <div class="game-icon">
+                        🖱️
+                    </div>
+
+                    <h3>
+                        Speed Clicker
+                    </h3>
+
+                    <p>
+                        Uji kecepatan klikmu dan
+                        dapatkan XP berdasarkan skor.
+                    </p>
+
+                    <a
+                        href="speedclicker.html"
+                        class="game-button"
+                    >
+                        Main Sekarang →
+                    </a>
+
+                </div>
+
+
+                <!-- GAME 2 -->
+
+                <div class="game-card">
+
+                    <div class="game-icon">
+                        🧠
+                    </div>
+
+                    <h3>
+                        Memory Match
+                    </h3>
+
+                    <p>
+                        Cocokkan kartu dan buktikan
+                        seberapa kuat ingatanmu.
+                    </p>
+
+                    <a
+                        href="memorymatch.html"
+                        class="game-button"
+                    >
+                        Main Sekarang →
+                    </a>
+
+                </div>
+
+
+                <!-- GAME 3 -->
+
+                <div class="game-card coming-soon">
+
+                    <div class="game-icon">
+                        ⚡
+                    </div>
+
+                    <h3>
+                        Reaction Test
+                    </h3>
+
+                    <p>
+                        Tes seberapa cepat reaksimu
+                        dalam menghadapi tantangan.
+                    </p>
+
+                    <a
+                        href="reaction.html"
+                        class="game-button"
+                    >
+                        Main Sekarang →
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ===============================
+             BOTTOM
+        ================================ -->
+
+        <div class="bottom-grid">
+
+
+            <!-- LEADERBOARD -->
+
+            <section
+                class="panel"
+                id="leaderboard"
+            >
+
+                <div class="panel-header">
+
+                    <h2>
+                        🏆 Leaderboard
+                    </h2>
+
+                    <span>
+                        GLOBAL
+                    </span>
+
+                </div>
+
+
+                <div class="leaderboard">
+
+
+                    <div class="player">
+
+                        <div class="rank">
+                            🥇
+                        </div>
+
+                        <div>
+
+                            <div class="player-name">
+                                VynixPro
+                            </div>
+
+                            <div class="player-level">
+                                Level 32
+                            </div>
+
+                        </div>
+
+                        <div class="player-xp">
+                            8,420 XP
+                        </div>
+
+                    </div>
+
+
+                    <div class="player">
+
+                        <div class="rank">
+                            🥈
+                        </div>
+
+                        <div>
+
+                            <div class="player-name">
+                                Shadow
+                            </div>
+
+                            <div class="player-level">
+                                Level 29
+                            </div>
+
+                        </div>
+
+                        <div class="player-xp">
+                            7,950 XP
+                        </div>
+
+                    </div>
+
+
+                    <div class="player">
+
+                        <div class="rank">
+                            🥉
+                        </div>
+
+                        <div>
+
+                            <div class="player-name">
+                                PlayerOne
+                            </div>
+
+                            <div class="player-level">
+                                Level 27
+                            </div>
+
+                        </div>
+
+                        <div class="player-xp">
+                            7,410 XP
+                        </div>
+
+                    </div>
+
+
+                    <div class="player">
+
+                        <div class="rank">
+                            4
+                        </div>
+
+                        <div>
+
+                            <div class="player-name">
+                                GamerX
+                            </div>
+
+                            <div class="player-level">
+                                Level 25
+                            </div>
+
+                        </div>
+
+                        <div class="player-xp">
+                            6,980 XP
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ACHIEVEMENT -->
+
+            <section
+                class="panel"
+                id="achievements"
+            >
+
+                <div class="panel-header">
+
+                    <h2>
+                        🎖️ Achievement
+                    </h2>
+
+                    <span>
+                        REWARDS
+                    </span>
+
+                </div>
+
+
+                <div class="achievement">
+
+                    <div class="achievement-icon">
+                        🎮
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            First Game
+                        </h3>
+
+                        <p>
+                            Main game pertamamu.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="achievement">
+
+                    <div class="achievement-icon">
+                        🔥
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            On Fire
+                        </h3>
+
+                        <p>
+                            Menangkan 5 game.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="achievement">
+
+                    <div class="achievement-icon">
+                        ⭐
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Level 10
+                        </h3>
+
+                        <p>
+                            Capai Level 10.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- FOOTER -->
+
+        <footer>
+
+            © 2026 Vynix Game Hub —
+            Play. Earn XP. Level Up.
+
+        </footer>
+
+    </main>
+
+
+
+    <!-- ===============================
+         JAVASCRIPT HOME
+    ================================ -->
+
+    <script>
+
+        /* =================================
+           USER LOGIN
+        ================================= */
+
+        const currentUser =
+            JSON.parse(
+                localStorage.getItem("currentUser")
+            );
+
+
+        /*
+         * Kalau belum login,
+         * kembali ke halaman login.
+         */
+
+        if (
+            !currentUser ||
+            currentUser.role !== "user"
+        ) {
+
+            window.location.href =
+                "index.html";
+
+        }
+
+
+        /* =================================
+           TAMPILKAN USERNAME
+        ================================= */
+
+        if (currentUser) {
+
+            const username =
+                currentUser.username;
+
+            document.getElementById(
+                "navUsername"
+            ).textContent =
+                username;
+
+            document.getElementById(
+                "profileUsername"
+            ).textContent =
+                username;
+
+
+            /* Huruf pertama username
+               untuk avatar */
+
+            document.getElementById(
+                "avatar"
+            ).textContent =
+                username
+                    .charAt(0)
+                    .toUpperCase();
+
+        }
+
+
+        /* =================================
+           DATA XP
+        ================================= */
+
+        let playerData =
+            JSON.parse(
+                localStorage.getItem(
+                    "playerData_" +
+                    currentUser.username
+                )
+            ) || {
+
+                xp: 0,
+
+                level: 1
+
+            };
+
+
+        /* =================================
+           TAMPILKAN LEVEL
+        ================================= */
+
+        function updatePlayer() {
+
+            const xp =
+                playerData.xp;
+
+            const level =
+                playerData.level;
+
+
+            document.getElementById(
+                "playerLevel"
+            ).textContent =
+                level;
+
+
+            document.getElementById(
+                "currentXP"
+            ).textContent =
+                xp;
+
+
+            const xpNeeded =
+                level * 100;
+
+
+            const progress =
+                Math.min(
+                    (xp / xpNeeded) * 100,
+                    100
+                );
+
+
+            document.getElementById(
+                "xpProgress"
+            ).style.width =
+                progress + "%";
+
+
+            document.getElementById(
+                "nextXP"
+            ).textContent =
+                xpNeeded + " XP";
+
+        }
+
+
+        updatePlayer();
+
+
+
+        /* =================================
+           MOBILE MENU
+        ================================= */
+
+        function toggleMenu() {
+
+            const menu =
+                document.getElementById(
+                    "navLinks"
+                );
+
+            menu.classList.toggle("show");
+
+        }
+
+
+
+        /* =================================
+           LOGOUT
+        ================================= */
+
+        function logoutUser() {
+
+            localStorage.removeItem(
+                "currentUser"
+            );
+
+            window.location.href =
+                "index.html";
+
+        }
+
+    </script>
 
 </body>
+
 </html>
