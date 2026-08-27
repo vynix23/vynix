@@ -2,36 +2,37 @@
    DATA AKUN
 ===================================== */
 
-let accounts = JSON.parse(
-    localStorage.getItem("accounts")
-) || [];
+let accounts =
+    JSON.parse(
+        localStorage.getItem("accounts")
+    ) || [];
 
 
 /* =====================================
    PASTIKAN ADMIN UTAMA ADA
 ===================================== */
 
-let adminAccount = accounts.find(
-    account =>
-        account.username.toLowerCase() === "admin"
-);
+let adminAccount =
+    accounts.find(
+        account =>
+            account.username &&
+            account.username.toLowerCase() === "admin"
+    );
 
-
-/* Jika admin belum ada */
 
 if (!adminAccount) {
 
     accounts.push({
+
         username: "admin",
+
         password: "12345",
+
         role: "admin"
+
     });
 
 }
-
-
-/* Jika admin sudah ada,
-   paksa role menjadi admin */
 
 else {
 
@@ -40,7 +41,7 @@ else {
 }
 
 
-/* Simpan data terbaru */
+/* SIMPAN */
 
 localStorage.setItem(
     "accounts",
@@ -71,7 +72,7 @@ if (loginForm) {
         document.getElementById("togglePassword");
 
 
-    /* TOMBOL LIHAT PASSWORD */
+    /* LIHAT PASSWORD */
 
     if (togglePassword) {
 
@@ -80,10 +81,12 @@ if (loginForm) {
             function () {
 
                 if (
-                    passwordInput.type === "password"
+                    passwordInput.type ===
+                    "password"
                 ) {
 
-                    passwordInput.type = "text";
+                    passwordInput.type =
+                        "text";
 
                     togglePassword.textContent =
                         "🙈";
@@ -106,7 +109,7 @@ if (loginForm) {
     }
 
 
-    /* PROSES LOGIN */
+    /* LOGIN */
 
     loginForm.addEventListener(
         "submit",
@@ -125,13 +128,16 @@ if (loginForm) {
             const account =
                 accounts.find(
                     account =>
-                        account.username.toLowerCase() ===
-                        username.toLowerCase() &&
-                        account.password === password
+                        account.username &&
+                        account.username
+                            .toLowerCase() ===
+                            username.toLowerCase() &&
+                        account.password ===
+                            password
                 );
 
 
-            /* LOGIN BERHASIL */
+            /* BERHASIL */
 
             if (account) {
 
@@ -142,8 +148,6 @@ if (loginForm) {
                     "#4ade80";
 
 
-                /* Simpan user yang sedang login */
-
                 localStorage.setItem(
                     "currentUser",
                     JSON.stringify(account)
@@ -153,19 +157,15 @@ if (loginForm) {
                 setTimeout(
                     function () {
 
-                        /* ADMIN */
-
                         if (
-                            account.role === "admin"
+                            account.role ===
+                            "admin"
                         ) {
 
                             window.location.href =
                                 "admin.html";
 
                         }
-
-
-                        /* USER */
 
                         else {
 
@@ -181,7 +181,7 @@ if (loginForm) {
             }
 
 
-            /* LOGIN GAGAL */
+            /* GAGAL */
 
             else {
 
@@ -202,7 +202,7 @@ if (loginForm) {
 
 
 /* =====================================
-   ADMIN PANEL
+   CEK ADMIN PANEL
 ===================================== */
 
 const accountTable =
@@ -212,9 +212,6 @@ const accountTable =
 
 
 if (accountTable) {
-
-    /* Cek apakah yang membuka admin
-       benar-benar admin */
 
     const currentUser =
         JSON.parse(
@@ -397,13 +394,17 @@ function openModal(index = null) {
         title.textContent =
             "Tambah Akun";
 
-        username.value = "";
+        username.value =
+            "";
 
-        password.value = "";
+        password.value =
+            "";
 
-        role.value = "user";
+        role.value =
+            "user";
 
-        editIndex.value = "";
+        editIndex.value =
+            "";
 
     }
 
@@ -431,7 +432,7 @@ function closeModal() {
 
 
 /* =====================================
-   TAMBAH / EDIT AKUN
+   TAMBAH / EDIT
 ===================================== */
 
 const accountForm =
@@ -482,7 +483,7 @@ if (accountForm) {
                     .value;
 
 
-            /* Username kosong */
+            /* USERNAME */
 
             if (username === "") {
 
@@ -495,7 +496,7 @@ if (accountForm) {
             }
 
 
-            /* Password terlalu pendek */
+            /* PASSWORD */
 
             if (password.length < 4) {
 
@@ -508,7 +509,7 @@ if (accountForm) {
             }
 
 
-            /* Username duplikat */
+            /* DUPLIKAT */
 
             const duplicate =
                 accounts.some(
@@ -518,7 +519,8 @@ if (accountForm) {
                     ) {
 
                         return (
-                            account.username.toLowerCase() ===
+                            account.username
+                                .toLowerCase() ===
                             username.toLowerCase() &&
                             index != editIndex
                         );
@@ -578,7 +580,7 @@ if (accountForm) {
             }
 
 
-            /* Simpan */
+            /* SIMPAN */
 
             localStorage.setItem(
                 "accounts",
@@ -602,7 +604,7 @@ if (accountForm) {
 
 
 /* =====================================
-   EDIT AKUN
+   EDIT
 ===================================== */
 
 function editAccount(index) {
@@ -613,15 +615,14 @@ function editAccount(index) {
 
 
 /* =====================================
-   HAPUS AKUN
+   HAPUS
 ===================================== */
 
 function deleteAccount(index) {
 
-    /* Admin utama tidak boleh dihapus */
-
     if (
-        accounts[index].username.toLowerCase() ===
+        accounts[index].username
+            .toLowerCase() ===
         "admin"
     ) {
 
@@ -674,3 +675,85 @@ function logoutAdmin() {
         "index.html";
 
 }
+
+
+/* =====================================
+   MOBILE SIDEBAR
+===================================== */
+
+function toggleSidebar() {
+
+    const sidebar =
+        document.getElementById(
+            "sidebar"
+        );
+
+    const overlay =
+        document.getElementById(
+            "sidebarOverlay"
+        );
+
+
+    if (!sidebar || !overlay) return;
+
+
+    sidebar.classList.toggle(
+        "mobile-open"
+    );
+
+    overlay.classList.toggle(
+        "show"
+    );
+
+}
+
+
+/* =====================================
+   TUTUP SIDEBAR
+===================================== */
+
+function closeSidebar() {
+
+    const sidebar =
+        document.getElementById(
+            "sidebar"
+        );
+
+    const overlay =
+        document.getElementById(
+            "sidebarOverlay"
+        );
+
+
+    if (!sidebar || !overlay) return;
+
+
+    sidebar.classList.remove(
+        "mobile-open"
+    );
+
+    overlay.classList.remove(
+        "show"
+    );
+
+}
+
+
+/* =====================================
+   ESC UNTUK TUTUP SIDEBAR / MODAL
+===================================== */
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (event.key === "Escape") {
+
+            closeSidebar();
+
+            closeModal();
+
+        }
+
+    }
+);
