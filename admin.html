@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Admin Panel | Vynix</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+</head>
+
+<body class="admin-body">
+
+    <div class="admin-container">
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <div class="admin-logo">
+                V
+            </div>
+
+            <h2>Vynix</h2>
+
+            <p class="admin-label">
+                ADMIN PANEL
+            </p>
+
+            <nav>
+
+                <a
+                    href="admin.html"
+                    class="active"
+                >
+                    🏠 Dashboard
+                </a>
+
+                <a href="#accounts">
+                    👥 Kelola Akun
+                </a>
+
+                <a href="home.html">
+                    🌐 Website
+                </a>
+
+            </nav>
+
+            <button
+                class="logout-button"
+                onclick="logoutAdmin()"
+            >
+                🚪 Logout
+            </button>
+
+        </aside>
+
+
+        <!-- MAIN -->
+
+        <main class="admin-main">
+
+            <header class="admin-header">
+
+                <div>
+
+                    <p class="small-text">
+                        Dashboard
+                    </p>
+
+                    <h1>
+                        Admin Panel 👋
+                    </h1>
+
+                </div>
+
+                <div class="admin-profile">
+                    👑 Admin
+                </div>
+
+            </header>
+
+
+            <!-- STATISTIK -->
+
+            <section class="stats">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        👥
+                    </div>
+
+                    <div>
+
+                        <p>
+                            Total Akun
+                        </p>
+
+                        <h2 id="totalAccounts">
+                            0
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        🔐
+                    </div>
+
+                    <div>
+
+                        <p>
+                            Status Sistem
+                        </p>
+
+                        <h2>
+                            Aktif
+                        </h2>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- KELOLA AKUN -->
+
+            <section
+                class="account-section"
+                id="accounts"
+            >
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>
+                            Kelola Akun
+                        </h2>
+
+                        <p>
+                            Tambahkan User atau Admin baru.
+                        </p>
+
+                    </div>
+
+                    <button
+                        class="add-button"
+                        onclick="openModal()"
+                    >
+                        + Tambah Akun
+                    </button>
+
+                </div>
+
+
+                <!-- TABLE -->
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    No
+                                </th>
+
+                                <th>
+                                    Username
+                                </th>
+
+                                <th>
+                                    Role
+                                </th>
+
+                                <th>
+                                    Aksi
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="accountTable">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- MODAL -->
+
+    <div
+        class="modal"
+        id="accountModal"
+    >
+
+        <div class="modal-box">
+
+            <button
+                class="close-button"
+                onclick="closeModal()"
+            >
+                ×
+            </button>
+
+
+            <h2 id="modalTitle">
+                Tambah Akun
+            </h2>
+
+            <p>
+                Buat akun User atau Admin.
+            </p>
+
+
+            <form id="accountForm">
+
+                <input
+                    type="hidden"
+                    id="editIndex"
+                >
+
+
+                <!-- USERNAME -->
+
+                <label for="newUsername">
+                    Username
+                </label>
+
+                <input
+                    type="text"
+                    id="newUsername"
+                    placeholder="Contoh: user01"
+                    autocomplete="off"
+                    required
+                >
+
+
+                <!-- PASSWORD -->
+
+                <label for="newPassword">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="newPassword"
+                    placeholder="Masukkan password"
+                    required
+                >
+
+
+                <!-- ROLE -->
+
+                <label for="newRole">
+                    Role Akun
+                </label>
+
+                <select
+                    id="newRole"
+                    required
+                >
+
+                    <option value="user">
+                        👤 User
+                    </option>
+
+                    <option value="admin">
+                        👑 Admin
+                    </option>
+
+                </select>
+
+
+                <!-- SAVE -->
+
+                <button
+                    type="submit"
+                    class="save-button"
+                >
+                    💾 Simpan Akun
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

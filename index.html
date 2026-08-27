@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Vynix</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="background">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        <div class="circle circle-3"></div>
+    </div>
+
+    <main class="login-container">
+
+        <div class="login-box">
+
+            <div class="logo">
+                V
+            </div>
+
+            <h1>Welcome Back</h1>
+
+            <p class="subtitle">
+                Login untuk melanjutkan ke Vynix
+            </p>
+
+            <form id="loginForm">
+
+                <div class="input-group">
+
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        placeholder="Masukkan username"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+                <div class="input-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <div class="password-box">
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Masukkan password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            id="togglePassword"
+                            class="eye-button"
+                        >
+                            👁
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="options">
+
+                    <label class="remember">
+
+                        <input type="checkbox">
+
+                        <span>
+                            Ingat saya
+                        </span>
+
+                    </label>
+
+                    <a href="#">
+                        Lupa password?
+                    </a>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="login-button"
+                >
+
+                    <span>
+                        Login
+                    </span>
+
+                    <span class="arrow">
+                        →
+                    </span>
+
+                </button>
+
+                <p id="message"></p>
+
+            </form>
+
+            <div class="divider">
+                <span>atau</span>
+            </div>
+
+            <p class="register">
+
+                Belum punya akun?
+
+                <a
+                    href="https://wa.me/6285780710536?text=Halo%2C%20saya%20ingin%20membeli%20akun."
+                    target="_blank"
+                >
+                    Beli akun
+                </a>
+
+            </p>
+
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
