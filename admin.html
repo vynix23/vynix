@@ -21,38 +21,83 @@
 
     <div class="admin-container">
 
-        <!-- SIDEBAR -->
+        <!-- =================================
+             TOMBOL MENU MOBILE
+        ================================== -->
 
-        <aside class="sidebar">
+        <button
+            class="mobile-menu-button"
+            id="mobileMenuButton"
+            onclick="toggleSidebar()"
+            aria-label="Buka menu"
+        >
+            ☰
+        </button>
+
+
+        <!-- =================================
+             OVERLAY MOBILE
+        ================================== -->
+
+        <div
+            class="sidebar-overlay"
+            id="sidebarOverlay"
+            onclick="closeSidebar()"
+        ></div>
+
+
+        <!-- =================================
+             SIDEBAR
+        ================================== -->
+
+        <aside
+            class="sidebar"
+            id="sidebar"
+        >
 
             <div class="admin-logo">
                 V
             </div>
 
-            <h2>Vynix</h2>
+            <h2>
+                Vynix
+            </h2>
 
             <p class="admin-label">
                 ADMIN PANEL
             </p>
+
+
+            <!-- NAVIGASI -->
 
             <nav>
 
                 <a
                     href="admin.html"
                     class="active"
+                    onclick="closeSidebar()"
                 >
                     🏠 Dashboard
                 </a>
 
-                <a href="#accounts">
+                <a
+                    href="#accounts"
+                    onclick="closeSidebar()"
+                >
                     👥 Kelola Akun
                 </a>
 
-                <a href="home.html">
+                <a
+                    href="home.html"
+                    onclick="closeSidebar()"
+                >
                     🌐 Website
                 </a>
 
             </nav>
+
+
+            <!-- LOGOUT -->
 
             <button
                 class="logout-button"
@@ -64,9 +109,14 @@
         </aside>
 
 
-        <!-- MAIN -->
+        <!-- =================================
+             MAIN
+        ================================== -->
 
         <main class="admin-main">
+
+
+            <!-- HEADER -->
 
             <header class="admin-header">
 
@@ -89,9 +139,14 @@
             </header>
 
 
-            <!-- STATISTIK -->
+            <!-- =================================
+                 STATISTIK
+            ================================== -->
 
             <section class="stats">
+
+
+                <!-- TOTAL AKUN -->
 
                 <div class="stat-card">
 
@@ -113,6 +168,8 @@
 
                 </div>
 
+
+                <!-- STATUS SISTEM -->
 
                 <div class="stat-card">
 
@@ -137,7 +194,9 @@
             </section>
 
 
-            <!-- KELOLA AKUN -->
+            <!-- =================================
+                 KELOLA AKUN
+            ================================== -->
 
             <section
                 class="account-section"
@@ -157,6 +216,7 @@
                         </p>
 
                     </div>
+
 
                     <button
                         class="add-button"
@@ -198,6 +258,7 @@
 
                         </thead>
 
+
                         <tbody id="accountTable">
                         </tbody>
 
@@ -212,7 +273,9 @@
     </div>
 
 
-    <!-- MODAL -->
+    <!-- =================================
+         MODAL
+    ================================== -->
 
     <div
         class="modal"
@@ -224,6 +287,7 @@
             <button
                 class="close-button"
                 onclick="closeModal()"
+                aria-label="Tutup"
             >
                 ×
             </button>
@@ -271,6 +335,7 @@
                     type="password"
                     id="newPassword"
                     placeholder="Masukkan password"
+                    autocomplete="new-password"
                     required
                 >
 
@@ -312,6 +377,8 @@
 
     </div>
 
+
+    <!-- JAVASCRIPT -->
 
     <script src="script.js"></script>
 

@@ -75,6 +75,7 @@ body {
 }
 
 @keyframes floating {
+
     0% {
         transform: translate(0, 0);
     }
@@ -86,45 +87,58 @@ body {
     100% {
         transform: translate(0, 0);
     }
+
 }
 
 
-/* =========================
-   LOGIN PAGE
-========================= */
+/* ==================================================
+   LOGIN
+================================================== */
 
 body:not(.admin-body) {
+
     display: flex;
+
     justify-content: center;
+
     align-items: center;
 }
 
 .login-container {
+
     width: 100%;
+
     max-width: 430px;
+
     padding: 20px;
 }
 
 .login-box {
+
     width: 100%;
+
     padding: 40px;
 
     border-radius: 25px;
 
-    background: rgba(255, 255, 255, 0.08);
+    background:
+        rgba(255,255,255,0.08);
 
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border:
+        1px solid rgba(255,255,255,0.15);
 
     backdrop-filter: blur(25px);
+
     -webkit-backdrop-filter: blur(25px);
 
     box-shadow:
-        0 25px 70px rgba(0, 0, 0, 0.5);
+        0 25px 70px rgba(0,0,0,0.5);
 
     animation: appear 0.8s ease;
 }
 
 @keyframes appear {
+
     from {
         opacity: 0;
         transform: translateY(30px) scale(0.97);
@@ -134,6 +148,7 @@ body:not(.admin-body) {
         opacity: 1;
         transform: translateY(0) scale(1);
     }
+
 }
 
 
@@ -143,21 +158,27 @@ body:not(.admin-body) {
 
 .logo,
 .admin-logo {
+
     display: flex;
+
     justify-content: center;
+
     align-items: center;
 
-    background: linear-gradient(
-        135deg,
-        #6366f1,
-        #06b6d4
-    );
+    background:
+        linear-gradient(
+            135deg,
+            #6366f1,
+            #06b6d4
+        );
 
     font-weight: bold;
 }
 
 .logo {
+
     width: 60px;
+
     height: 60px;
 
     margin: 0 auto 20px;
@@ -167,7 +188,7 @@ body:not(.admin-body) {
     font-size: 28px;
 
     box-shadow:
-        0 10px 30px rgba(99, 102, 241, 0.4);
+        0 10px 30px rgba(99,102,241,0.4);
 }
 
 
@@ -176,15 +197,22 @@ body:not(.admin-body) {
 ========================= */
 
 h1 {
+
     text-align: center;
+
     font-size: 32px;
+
     margin-bottom: 8px;
 }
 
 .subtitle {
+
     text-align: center;
+
     color: #a5b4fc;
+
     margin-bottom: 30px;
+
     line-height: 1.5;
 }
 
@@ -194,10 +222,12 @@ h1 {
 ========================= */
 
 .input-group {
+
     margin-bottom: 20px;
 }
 
 .input-group label {
+
     display: block;
 
     margin-bottom: 8px;
@@ -210,18 +240,22 @@ h1 {
 }
 
 .input-group input {
+
     width: 100%;
+
     min-width: 0;
 
     padding: 14px 16px;
 
     border-radius: 12px;
 
-    border: 1px solid rgba(255,255,255,0.15);
+    border:
+        1px solid rgba(255,255,255,0.15);
 
     outline: none;
 
-    background: rgba(255,255,255,0.07);
+    background:
+        rgba(255,255,255,0.07);
 
     color: white;
 
@@ -231,10 +265,12 @@ h1 {
 }
 
 .input-group input::placeholder {
+
     color: #94a3b8;
 }
 
 .input-group input:focus {
+
     border-color: #818cf8;
 
     box-shadow:
@@ -247,18 +283,23 @@ h1 {
 ========================= */
 
 .password-box {
+
     position: relative;
+
     width: 100%;
 }
 
 .password-box input {
+
     padding-right: 50px;
 }
 
 .eye-button {
+
     position: absolute;
 
     right: 12px;
+
     top: 50%;
 
     transform: translateY(-50%);
@@ -277,6 +318,7 @@ h1 {
 }
 
 .eye-button:hover {
+
     opacity: 1;
 }
 
@@ -286,6 +328,7 @@ h1 {
 ========================= */
 
 .options {
+
     display: flex;
 
     justify-content: space-between;
@@ -300,6 +343,7 @@ h1 {
 }
 
 .remember {
+
     display: flex;
 
     gap: 7px;
@@ -313,6 +357,7 @@ h1 {
 
 .options a,
 .register a {
+
     color: #818cf8;
 
     text-decoration: none;
@@ -322,6 +367,7 @@ h1 {
 
 .options a:hover,
 .register a:hover {
+
     text-decoration: underline;
 }
 
@@ -331,29 +377,36 @@ h1 {
 ========================= */
 
 .login-button {
+
     width: 100%;
+
     min-height: 50px;
 
     padding: 15px;
 
     border: none;
+
     border-radius: 12px;
 
-    background: linear-gradient(
-        135deg,
-        #6366f1,
-        #06b6d4
-    );
+    background:
+        linear-gradient(
+            135deg,
+            #6366f1,
+            #06b6d4
+        );
 
     color: white;
 
     font-size: 16px;
+
     font-weight: bold;
 
     cursor: pointer;
 
     display: flex;
+
     justify-content: center;
+
     align-items: center;
 
     gap: 10px;
@@ -365,6 +418,7 @@ h1 {
 }
 
 .login-button:hover {
+
     transform: translateY(-2px);
 
     box-shadow:
@@ -372,10 +426,12 @@ h1 {
 }
 
 .login-button:active {
+
     transform: scale(0.98);
 }
 
 .arrow {
+
     font-size: 20px;
 }
 
@@ -385,6 +441,7 @@ h1 {
 ========================= */
 
 #message {
+
     text-align: center;
 
     margin-top: 15px;
@@ -402,7 +459,9 @@ h1 {
 ========================= */
 
 .divider {
+
     display: flex;
+
     align-items: center;
 
     gap: 15px;
@@ -414,13 +473,15 @@ h1 {
 
 .divider::before,
 .divider::after {
+
     content: "";
 
     flex: 1;
 
     height: 1px;
 
-    background: rgba(255,255,255,0.15);
+    background:
+        rgba(255,255,255,0.15);
 }
 
 
@@ -429,6 +490,7 @@ h1 {
 ========================= */
 
 .register {
+
     text-align: center;
 
     color: #94a3b8;
@@ -439,6 +501,7 @@ h1 {
 }
 
 .register a {
+
     color: #22d3ee;
 }
 
@@ -448,12 +511,13 @@ h1 {
 ================================================== */
 
 .admin-body {
+
     min-height: 100vh;
 
     background:
         radial-gradient(
             circle at top right,
-            rgba(49, 46, 129, 0.25),
+            rgba(49,46,129,0.25),
             transparent 35%
         ),
         #020617;
@@ -461,42 +525,51 @@ h1 {
     color: white;
 
     overflow-x: hidden;
+
     overflow-y: auto;
 
     display: block;
 }
 
 .admin-container {
+
     width: 100%;
+
     min-height: 100vh;
 }
 
 
 /* =========================
-   SIDEBAR DESKTOP
+   SIDEBAR
 ========================= */
 
 .sidebar {
+
     position: fixed;
 
     top: 0;
+
     left: 0;
+
     bottom: 0;
 
     width: 250px;
 
     padding: 30px 20px;
 
-    background: rgba(15, 23, 42, 0.97);
+    background:
+        rgba(15,23,42,0.97);
 
     border-right:
         1px solid rgba(255,255,255,0.08);
 
-    z-index: 50;
+    z-index: 100;
 }
 
 .admin-logo {
+
     width: 55px;
+
     height: 55px;
 
     margin-bottom: 15px;
@@ -510,12 +583,14 @@ h1 {
 }
 
 .sidebar h2 {
+
     margin-bottom: 5px;
 
     font-size: 22px;
 }
 
 .admin-label {
+
     color: #64748b;
 
     font-size: 11px;
@@ -527,10 +602,11 @@ h1 {
 
 
 /* =========================
-   ADMIN NAVIGATION
+   NAVIGATION
 ========================= */
 
 .sidebar nav {
+
     display: flex;
 
     flex-direction: column;
@@ -539,6 +615,7 @@ h1 {
 }
 
 .sidebar nav a {
+
     display: block;
 
     color: #94a3b8;
@@ -554,6 +631,7 @@ h1 {
 
 .sidebar nav a:hover,
 .sidebar nav a.active {
+
     color: white;
 
     background:
@@ -566,10 +644,13 @@ h1 {
 ========================= */
 
 .logout-button {
+
     position: absolute;
 
     left: 20px;
+
     right: 20px;
+
     bottom: 25px;
 
     width: calc(100% - 40px);
@@ -592,16 +673,18 @@ h1 {
 }
 
 .logout-button:hover {
+
     background:
         rgba(248,113,113,0.1);
 }
 
 
 /* =========================
-   ADMIN MAIN
+   MAIN
 ========================= */
 
 .admin-main {
+
     width: calc(100% - 250px);
 
     margin-left: 250px;
@@ -615,10 +698,11 @@ h1 {
 
 
 /* =========================
-   ADMIN HEADER
+   HEADER
 ========================= */
 
 .admin-header {
+
     display: flex;
 
     justify-content: space-between;
@@ -631,6 +715,7 @@ h1 {
 }
 
 .small-text {
+
     color: #818cf8;
 
     font-size: 14px;
@@ -639,6 +724,7 @@ h1 {
 }
 
 .admin-header h1 {
+
     text-align: left;
 
     margin: 0;
@@ -647,6 +733,7 @@ h1 {
 }
 
 .admin-profile {
+
     padding: 10px 16px;
 
     border-radius: 10px;
@@ -665,12 +752,13 @@ h1 {
 ========================= */
 
 .stats {
+
     width: 100%;
 
     display: grid;
 
     grid-template-columns:
-        repeat(2, minmax(0, 1fr));
+        repeat(2, minmax(0,1fr));
 
     gap: 20px;
 
@@ -678,6 +766,7 @@ h1 {
 }
 
 .stat-card {
+
     min-width: 0;
 
     padding: 25px;
@@ -698,7 +787,9 @@ h1 {
 }
 
 .stat-icon {
+
     width: 55px;
+
     height: 55px;
 
     flex-shrink: 0;
@@ -706,6 +797,7 @@ h1 {
     display: flex;
 
     justify-content: center;
+
     align-items: center;
 
     border-radius: 14px;
@@ -717,12 +809,14 @@ h1 {
 }
 
 .stat-card p {
+
     color: #94a3b8;
 
     margin-bottom: 5px;
 }
 
 .stat-card h2 {
+
     margin: 0;
 }
 
@@ -732,6 +826,7 @@ h1 {
 ========================= */
 
 .account-section {
+
     width: 100%;
 
     padding: 30px;
@@ -748,6 +843,7 @@ h1 {
 }
 
 .section-header {
+
     display: flex;
 
     justify-content: space-between;
@@ -760,10 +856,12 @@ h1 {
 }
 
 .section-header h2 {
+
     margin-bottom: 5px;
 }
 
 .section-header p {
+
     color: #64748b;
 
     line-height: 1.5;
@@ -775,17 +873,19 @@ h1 {
 ========================= */
 
 .add-button {
+
     padding: 12px 18px;
 
     border: none;
 
     border-radius: 10px;
 
-    background: linear-gradient(
-        135deg,
-        #6366f1,
-        #06b6d4
-    );
+    background:
+        linear-gradient(
+            135deg,
+            #6366f1,
+            #06b6d4
+        );
 
     color: white;
 
@@ -799,6 +899,7 @@ h1 {
 }
 
 .add-button:hover {
+
     transform: translateY(-2px);
 }
 
@@ -808,6 +909,7 @@ h1 {
 ========================= */
 
 .table-container {
+
     width: 100%;
 
     overflow-x: auto;
@@ -816,6 +918,7 @@ h1 {
 }
 
 table {
+
     width: 100%;
 
     min-width: 600px;
@@ -824,6 +927,7 @@ table {
 }
 
 th {
+
     text-align: left;
 
     padding: 15px;
@@ -837,6 +941,7 @@ th {
 }
 
 td {
+
     padding: 15px;
 
     border-bottom:
@@ -846,6 +951,7 @@ td {
 }
 
 .action-button {
+
     padding: 7px 10px;
 
     border: none;
@@ -858,12 +964,14 @@ td {
 }
 
 .edit-button {
+
     background: #1d4ed8;
 
     color: white;
 }
 
 .delete-button {
+
     background: #991b1b;
 
     color: white;
@@ -875,6 +983,7 @@ td {
 ========================= */
 
 .modal {
+
     display: none;
 
     position: fixed;
@@ -890,14 +999,16 @@ td {
 
     padding: 20px;
 
-    z-index: 100;
+    z-index: 200;
 }
 
 .modal.show {
+
     display: flex;
 }
 
 .modal-box {
+
     width: 100%;
 
     max-width: 420px;
@@ -922,19 +1033,23 @@ td {
 }
 
 .modal-box h2 {
+
     margin-bottom: 8px;
 }
 
 .modal-box > p {
+
     color: #64748b;
 
     margin-bottom: 25px;
 }
 
 .close-button {
+
     position: absolute;
 
     right: 20px;
+
     top: 15px;
 
     border: none;
@@ -949,6 +1064,7 @@ td {
 }
 
 .modal-box label {
+
     display: block;
 
     margin-bottom: 7px;
@@ -960,6 +1076,7 @@ td {
 
 .modal-box input,
 .modal-box select {
+
     width: 100%;
 
     padding: 13px;
@@ -981,13 +1098,24 @@ td {
     font-size: 15px;
 }
 
+.modal-box input:focus,
+.modal-box select:focus {
+
+    border-color: #818cf8;
+
+    box-shadow:
+        0 0 0 3px rgba(99,102,241,0.12);
+}
+
 .modal-box select option {
+
     background: #0f172a;
 
     color: white;
 }
 
 .save-button {
+
     width: 100%;
 
     padding: 13px;
@@ -1006,6 +1134,58 @@ td {
 }
 
 
+/* =========================
+   MOBILE BUTTON
+========================= */
+
+.mobile-menu-button {
+
+    display: none;
+
+    position: fixed;
+
+    top: 12px;
+
+    left: 12px;
+
+    width: 44px;
+
+    height: 44px;
+
+    justify-content: center;
+
+    align-items: center;
+
+    border: 1px solid rgba(255,255,255,0.12);
+
+    border-radius: 12px;
+
+    background:
+        rgba(15,23,42,0.95);
+
+    color: white;
+
+    font-size: 23px;
+
+    cursor: pointer;
+
+    z-index: 150;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.3);
+}
+
+.mobile-menu-button:active {
+
+    transform: scale(0.94);
+}
+
+.sidebar-overlay {
+
+    display: none;
+}
+
+
 /* ==================================================
    TABLET
 ================================================== */
@@ -1013,10 +1193,12 @@ td {
 @media (max-width: 900px) {
 
     .sidebar {
+
         width: 210px;
     }
 
     .admin-main {
+
         width: calc(100% - 210px);
 
         margin-left: 210px;
@@ -1025,8 +1207,10 @@ td {
     }
 
     .stats {
+
         grid-template-columns: 1fr;
     }
+
 }
 
 
@@ -1036,28 +1220,36 @@ td {
 
 @media (max-width: 700px) {
 
-    /* LOGIN */
+
+    /* =========================
+       LOGIN
+    ========================= */
 
     body:not(.admin-body) {
+
         align-items: flex-start;
 
         padding-top: 20px;
     }
 
     .login-container {
+
         max-width: 100%;
 
         padding: 15px;
     }
 
     .login-box {
+
         padding: 28px 20px;
 
         border-radius: 20px;
     }
 
     .logo {
+
         width: 55px;
+
         height: 55px;
 
         font-size: 25px;
@@ -1066,113 +1258,160 @@ td {
     }
 
     h1 {
+
         font-size: 26px;
     }
 
     .subtitle {
+
         font-size: 14px;
 
         margin-bottom: 25px;
     }
 
     .options {
+
         font-size: 12px;
     }
 
 
     /* =========================
-       ADMIN MOBILE HEADER
+       MOBILE MENU BUTTON
     ========================= */
 
-    .sidebar {
-        position: fixed;
-
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: auto;
-
-        width: 100%;
-        height: 64px;
-
-        min-height: 64px;
-
-        padding: 8px 10px;
+    .mobile-menu-button {
 
         display: flex;
-
-        align-items: center;
-
-        background: rgba(15,23,42,0.98);
-
-        border-right: none;
-
-        border-bottom:
-            1px solid rgba(255,255,255,0.1);
-    }
-
-    .admin-logo {
-        width: 45px;
-        height: 45px;
-
-        margin: 0 9px 0 0;
-
-        border-radius: 12px;
-
-        font-size: 20px;
-
-        flex-shrink: 0;
-    }
-
-    .sidebar h2 {
-        display: block;
-
-        font-size: 17px;
-
-        margin: 0;
-
-        white-space: nowrap;
-    }
-
-    .admin-label {
-        display: none;
     }
 
 
     /* =========================
-       ADMIN NAV MOBILE
+       SIDEBAR MOBILE
+    ========================= */
+
+    .sidebar {
+
+        position: fixed;
+
+        top: 0;
+
+        left: 0;
+
+        bottom: 0;
+
+        width: 270px;
+
+        height: 100vh;
+
+        padding: 30px 20px;
+
+        background:
+            rgba(15,23,42,0.99);
+
+        border-right:
+            1px solid rgba(255,255,255,0.1);
+
+        z-index: 200;
+
+        transform:
+            translateX(-100%);
+
+        transition:
+            transform 0.3s ease;
+
+        box-shadow:
+            15px 0 40px rgba(0,0,0,0.35);
+
+        overflow-y: auto;
+    }
+
+
+    .sidebar.mobile-open {
+
+        transform:
+            translateX(0);
+    }
+
+
+    /* =========================
+       SIDEBAR LOGO
+    ========================= */
+
+    .admin-logo {
+
+        width: 55px;
+
+        height: 55px;
+
+        margin-bottom: 15px;
+
+        border-radius: 16px;
+
+        font-size: 25px;
+    }
+
+
+    .sidebar h2 {
+
+        display: block;
+
+        font-size: 22px;
+
+        margin-bottom: 5px;
+    }
+
+
+    .admin-label {
+
+        display: block;
+
+        margin-bottom: 35px;
+    }
+
+
+    /* =========================
+       NAV MOBILE
     ========================= */
 
     .sidebar nav {
-        margin-left: auto;
 
         display: flex;
 
-        flex-direction: row;
+        flex-direction: column;
 
-        align-items: center;
+        gap: 8px;
 
-        gap: 3px;
+        margin: 0;
     }
+
 
     .sidebar nav a {
-        width: 40px;
-        height: 40px;
-
-        padding: 0;
 
         display: flex;
 
-        justify-content: center;
         align-items: center;
 
-        font-size: 0;
+        width: 100%;
 
-        border-radius: 9px;
+        height: auto;
+
+        padding: 14px;
+
+        border-radius: 10px;
+
+        font-size: 15px;
+
+        color: #94a3b8;
     }
 
-    .sidebar nav a::first-letter {
-        font-size: 18px;
+
+    .sidebar nav a:hover,
+    .sidebar nav a.active {
+
+        color: white;
+
+        background:
+            rgba(99,102,241,0.2);
     }
 
 
@@ -1181,45 +1420,82 @@ td {
     ========================= */
 
     .logout-button {
-        position: static;
 
-        width: 40px;
-        height: 40px;
+        position: absolute;
 
-        padding: 0;
+        left: 20px;
 
-        margin-left: 3px;
+        right: 20px;
 
-        font-size: 0;
+        bottom: 25px;
 
-        flex-shrink: 0;
-    }
+        width: calc(100% - 40px);
 
-    .logout-button::first-letter {
-        font-size: 18px;
+        padding: 13px;
+
+        margin: 0;
+
+        font-size: 14px;
     }
 
 
     /* =========================
-       ADMIN MAIN MOBILE
+       OVERLAY
+    ========================= */
+
+    .sidebar-overlay {
+
+        display: block;
+
+        position: fixed;
+
+        inset: 0;
+
+        background:
+            rgba(0,0,0,0.65);
+
+        z-index: 190;
+
+        opacity: 0;
+
+        visibility: hidden;
+
+        transition:
+            opacity 0.3s ease,
+            visibility 0.3s ease;
+    }
+
+
+    .sidebar-overlay.show {
+
+        opacity: 1;
+
+        visibility: visible;
+    }
+
+
+    /* =========================
+       MAIN
     ========================= */
 
     .admin-main {
+
         width: 100%;
 
         margin-left: 0;
 
-        padding: 84px 14px 25px;
+        padding: 75px 14px 25px;
 
         overflow: visible;
     }
 
 
     /* =========================
-       ADMIN HEADER MOBILE
+       HEADER
     ========================= */
 
     .admin-header {
+
         display: flex;
 
         flex-direction: column;
@@ -1232,16 +1508,19 @@ td {
     }
 
     .small-text {
+
         font-size: 13px;
     }
 
     .admin-header h1 {
+
         font-size: 24px;
 
         text-align: left;
     }
 
     .admin-profile {
+
         padding: 9px 13px;
 
         font-size: 13px;
@@ -1249,10 +1528,11 @@ td {
 
 
     /* =========================
-       STATISTICS MOBILE
+       STATS
     ========================= */
 
     .stats {
+
         width: 100%;
 
         display: grid;
@@ -1265,6 +1545,7 @@ td {
     }
 
     .stat-card {
+
         width: 100%;
 
         padding: 18px;
@@ -1275,7 +1556,9 @@ td {
     }
 
     .stat-icon {
+
         width: 48px;
+
         height: 48px;
 
         font-size: 20px;
@@ -1283,10 +1566,11 @@ td {
 
 
     /* =========================
-       ACCOUNT MOBILE
+       ACCOUNT
     ========================= */
 
     .account-section {
+
         width: 100%;
 
         padding: 18px;
@@ -1295,6 +1579,7 @@ td {
     }
 
     .section-header {
+
         display: flex;
 
         flex-direction: column;
@@ -1307,14 +1592,17 @@ td {
     }
 
     .section-header h2 {
+
         font-size: 20px;
     }
 
     .section-header p {
+
         font-size: 13px;
     }
 
     .add-button {
+
         width: 100%;
 
         min-height: 46px;
@@ -1324,10 +1612,11 @@ td {
 
 
     /* =========================
-       TABLE MOBILE
+       TABLE
     ========================= */
 
     .table-container {
+
         width: 100%;
 
         overflow-x: auto;
@@ -1336,24 +1625,28 @@ td {
     }
 
     table {
+
         min-width: 580px;
     }
 
     th,
     td {
+
         padding: 12px;
     }
 
 
     /* =========================
-       MODAL MOBILE
+       MODAL
     ========================= */
 
     .modal {
+
         padding: 12px;
     }
 
     .modal-box {
+
         width: 100%;
 
         max-width: 100%;
@@ -1364,6 +1657,7 @@ td {
 
         border-radius: 17px;
     }
+
 }
 
 
@@ -1373,25 +1667,28 @@ td {
 
 @media (max-width: 380px) {
 
-    /* LOGIN */
-
     body:not(.admin-body) {
+
         padding-top: 10px;
     }
 
     .login-container {
+
         padding: 10px;
     }
 
     .login-box {
+
         padding: 24px 16px;
     }
 
     h1 {
+
         font-size: 24px;
     }
 
     .options {
+
         flex-direction: column;
 
         align-items: flex-start;
@@ -1402,40 +1699,67 @@ td {
 
     /* ADMIN */
 
+    .mobile-menu-button {
+
+        width: 42px;
+
+        height: 42px;
+
+        top: 10px;
+
+        left: 10px;
+
+        font-size: 21px;
+    }
+
     .sidebar {
-        padding: 8px;
+
+        width: 250px;
+
+        padding: 25px 18px;
     }
 
     .admin-logo {
-        width: 42px;
-        height: 42px;
 
-        margin-right: 6px;
+        width: 50px;
+
+        height: 50px;
     }
 
     .sidebar h2 {
-        font-size: 15px;
+
+        font-size: 20px;
     }
 
-    .sidebar nav {
-        gap: 1px;
+    .sidebar nav a {
+
+        padding: 13px;
+
+        font-size: 14px;
     }
 
-    .sidebar nav a,
     .logout-button {
-        width: 36px;
-        height: 36px;
+
+        left: 18px;
+
+        right: 18px;
+
+        width: calc(100% - 36px);
     }
 
     .admin-main {
-        padding: 80px 10px 20px;
+
+        padding: 70px 10px 20px;
     }
 
     .admin-header h1 {
+
         font-size: 22px;
     }
 
     .account-section {
+
         padding: 14px;
     }
+
 }
