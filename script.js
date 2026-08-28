@@ -1,43 +1,105 @@
 /* =====================================
-   DATA AKUN
+   SUPABASE CONFIG
 ===================================== */
 
-let accounts = JSON.parse(
-    localStorage.getItem("accounts")
-) || [];
+const SUPABASE_URL =
+    "https://tmmtbqzlzbkbtyompagb.supabase.co";
+
+const SUPABASE_KEY =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRtbXRicXpsemJrYnR5b21wYWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc5MTQ0ODMsImV4cCI6MjEwMzQ5MDQ4M30.O0eCNiTgYk2F0Ivb2RhdNvoaD4JYPTbcwz7xGw_i6KU";
 
 
 /* =====================================
-   ADMIN UTAMA
+   SUPABASE CLIENT
 ===================================== */
 
-let adminAccount = accounts.find(
-    account =>
-        account.username.toLowerCase() === "admin"
-);
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
 
-if (!adminAccount) {
+/* =====================================
+   DATA AKUN
+===================================== */
 
-    accounts.push({
-        username: "admin",
-        password: "12345",
-        role: "admin"
-    });
+let accounts = [];
+
+
+/* =====================================
+   LOAD AKUN DARI SUPABASE
+===================================== */
+
+async function loadAccounts() {
+
+    const { data, error } =
+        await supabaseClient
+            .from("accounts")
+            .select("*")
+            .order("id", { ascending: true });
+
+
+    if (error) {
+
+        console.error(
+            "Gagal mengambil akun:",
+            error
+        );
+
+        alert(
+            "Gagal mengambil data akun dari Supabase."
+        );
+
+        return;
+
+    }
+
+
+    accounts = data || [];
+
+
+    /*
+       Jika belum ada admin,
+       buat admin utama.
+    */
+
+    const adminExists =
+        accounts.some(
+            account =>
+                account.username.toLowerCase() ===
+                "admin"
+        );
+
+
+    if (!adminExists) {
+
+        const { data: newAdmin, error } =
+            await supabaseClient
+                .from("accounts")
+                .insert([
+                    {
+                        username: "admin",
+                        password: "12345",
+                        role: "admin"
+                    }
+                ])
+                .select()
+                .single();
+
+
+        if (!error && newAdmin) {
+
+            accounts.push(newAdmin);
+
+        }
+
+    }
+
+
+    displayAccounts();
 
 }
-
-else {
-
-    adminAccount.role = "admin";
-
-}
-
-
-localStorage.setItem(
-    "accounts",
-    JSON.stringify(accounts)
-);
 
 
 /* =====================================
@@ -50,17 +112,20 @@ function toggleSidebar() {
         document.getElementById("sidebar");
 
     const overlay =
-        document.getElementById("sidebarOverlay");
+        document.getElementById(
+            "sidebarOverlay"
+        );
+
 
     if (!sidebar) return;
 
+
     sidebar.classList.toggle("open");
+
 
     if (overlay) {
 
-        overlay.classList.toggle(
-            "show"
-        );
+        overlay.classList.toggle("show");
 
     }
 
@@ -73,13 +138,17 @@ function closeSidebar() {
         document.getElementById("sidebar");
 
     const overlay =
-        document.getElementById("sidebarOverlay");
+        document.getElementById(
+            "sidebarOverlay"
+        );
+
 
     if (sidebar) {
 
         sidebar.classList.remove("open");
 
     }
+
 
     if (overlay) {
 
@@ -110,7 +179,9 @@ if (loginForm) {
         document.getElementById("message");
 
     const togglePassword =
-        document.getElementById("togglePassword");
+        document.getElementById(
+            "togglePassword"
+        );
 
 
     if (togglePassword) {
@@ -150,7 +221,7 @@ if (loginForm) {
 
     loginForm.addEventListener(
         "submit",
-        function (event) {
+        async function (event) {
 
             event.preventDefault();
 
@@ -162,13 +233,47 @@ if (loginForm) {
                 passwordInput.value;
 
 
-            const account =
-                accounts.find(
-                    account =>
-                        account.username.toLowerCase() ===
-                        username.toLowerCase() &&
-                        account.password === password
-                );
+            if (!username || !password) {
+
+                message.textContent =
+                    "Username dan password harus diisi.";
+
+                message.style.color =
+                    "#f87171";
+
+                return;
+
+            }
+
+
+            const { data: account, error } =
+                await supabaseClient
+                    .from("accounts")
+                    .select("*")
+                    .ilike(
+                        "username",
+                        username
+                    )
+                    .eq(
+                        "password",
+                        password
+                    )
+                    .maybeSingle();
+
+
+            if (error) {
+
+                console.error(error);
+
+                message.textContent =
+                    "Terjadi kesalahan koneksi.";
+
+                message.style.color =
+                    "#f87171";
+
+                return;
+
+            }
 
 
             if (account) {
@@ -262,7 +367,7 @@ if (accountTable) {
 
     else {
 
-        displayAccounts();
+        loadAccounts();
 
     }
 
@@ -443,7 +548,9 @@ function closeModal() {
             "accountModal"
         );
 
+
     if (!modal) return;
+
 
     modal.classList.remove("show");
 
@@ -464,7 +571,7 @@ if (accountForm) {
 
     accountForm.addEventListener(
         "submit",
-        function (event) {
+        async function (event) {
 
             event.preventDefault();
 
@@ -524,6 +631,10 @@ if (accountForm) {
             }
 
 
+            /*
+               CEK USERNAME DUPLIKAT
+            */
+
             const duplicate =
                 accounts.some(
                     function (
@@ -534,7 +645,8 @@ if (accountForm) {
                         return (
                             account.username.toLowerCase() ===
                             username.toLowerCase() &&
-                            index != editIndex
+                            String(index) !==
+                            String(editIndex)
                         );
 
                     }
@@ -552,45 +664,93 @@ if (accountForm) {
             }
 
 
+            /*
+               EDIT AKUN
+            */
+
             if (editIndex !== "") {
 
-                accounts[editIndex] = {
+                const account =
+                    accounts[editIndex];
 
-                    username:
-                        username,
 
-                    password:
-                        password,
+                const { data, error } =
+                    await supabaseClient
+                        .from("accounts")
+                        .update({
+                            username:
+                                username,
+                            password:
+                                password,
+                            role:
+                                role
+                        })
+                        .eq(
+                            "id",
+                            account.id
+                        )
+                        .select()
+                        .single();
 
-                    role:
-                        role
 
-                };
+                if (error) {
+
+                    console.error(error);
+
+                    alert(
+                        "Gagal mengedit akun."
+                    );
+
+                    return;
+
+                }
+
+
+                accounts[editIndex] =
+                    data;
 
             }
+
+
+            /*
+               TAMBAH AKUN
+            */
 
             else {
 
-                accounts.push({
+                const { data, error } =
+                    await supabaseClient
+                        .from("accounts")
+                        .insert([
+                            {
+                                username:
+                                    username,
+                                password:
+                                    password,
+                                role:
+                                    role
+                            }
+                        ])
+                        .select()
+                        .single();
 
-                    username:
-                        username,
 
-                    password:
-                        password,
+                if (error) {
 
-                    role:
-                        role
+                    console.error(error);
 
-                });
+                    alert(
+                        "Gagal menambahkan akun."
+                    );
+
+                    return;
+
+                }
+
+
+                accounts.push(data);
 
             }
-
-
-            localStorage.setItem(
-                "accounts",
-                JSON.stringify(accounts)
-            );
 
 
             displayAccounts();
@@ -623,7 +783,7 @@ function editAccount(index) {
    DELETE
 ===================================== */
 
-function deleteAccount(index) {
+async function deleteAccount(index) {
 
     if (
         accounts[index].username.toLowerCase() ===
@@ -647,20 +807,36 @@ function deleteAccount(index) {
         );
 
 
-    if (yakin) {
-
-        accounts.splice(index, 1);
+    if (!yakin) return;
 
 
-        localStorage.setItem(
-            "accounts",
-            JSON.stringify(accounts)
+    const { error } =
+        await supabaseClient
+            .from("accounts")
+            .delete()
+            .eq(
+                "id",
+                accounts[index].id
+            );
+
+
+    if (error) {
+
+        console.error(error);
+
+        alert(
+            "Gagal menghapus akun."
         );
 
-
-        displayAccounts();
+        return;
 
     }
+
+
+    accounts.splice(index, 1);
+
+
+    displayAccounts();
 
 }
 
@@ -675,6 +851,7 @@ function logoutAdmin() {
         "currentUser"
     );
 
+
     window.location.href =
         "index.html";
 
@@ -682,7 +859,7 @@ function logoutAdmin() {
 
 
 /* =====================================
-   TUTUP SIDEBAR SAAT TEKAN ESC
+   ESC
 ===================================== */
 
 document.addEventListener(
